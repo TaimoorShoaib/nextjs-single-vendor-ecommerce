@@ -1,8 +1,8 @@
-import { connect } from "@/dbconfig/dbconfig";
+import { connect } from "../../../../dbconfig/dbconfig";
 import Joi from "joi";
-import User from "@/models/usermodel";
+import User from "../../../../models/usermodel";
 import bcrypt from "bcryptjs";
-import JWTService from "@/helpers/JWTService";
+import JWTService from "../../../../helpers/JWTService";
 import { sendEmail } from "../../../../helpers/mailer";
 import { NextRequest, NextResponse } from "next/server";
 import userDTO from "../../../../dto/user";
