@@ -95,7 +95,7 @@ const Login = () => {
         Log in
       </button>
       <span>
-        Don't have a account ?{" "}
+        Dont have a account ?{" "}
         <button
           className={style.createAccount}
           onClick={() => router.push("/signup")}
