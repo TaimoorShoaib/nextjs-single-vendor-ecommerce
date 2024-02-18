@@ -1,0 +1,41 @@
+.inputTextWrapper {
+    display: flex;
+    flex-direction: column;
+    width: inherit;
+    align-items: center;
+  }
+  
+  .inputTextWrapper input {
+    padding: 10px 20px;
+    margin: 10px;
+    outline: none;
+    width: 100%; /* Adjust width to fill the container */
+    border: 1px solid transparent;
+    font-size: 20px;
+    background-color: transparent; /* Set background color to transparent */
+  }
+  
+  .errorMessage {
+    color: #da1b55;
+    text-align: left;
+    /* Remove width property */
+  }
+  
+  @media (max-width: 667px) {
+    .inputTextWrapper {
+      display: flex;
+      flex-direction: column;
+      width: inherit;
+      align-items: center;
+    }
+  
+    .inputTextWrapper input {
+      padding: 10px 20px;
+      margin: 10px;
+      outline: none;
+      width: 100%; /* Adjust width to fill the container */
+      border: 1px solid transparent;
+      font-size: 20px;
+      background-color: transparent; /* Set background color to transparent */
+    }
+  }
