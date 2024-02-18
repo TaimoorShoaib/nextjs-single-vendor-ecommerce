@@ -1,17 +1,17 @@
 "use client";
 
-import React from 'react'
+import React from "react"
 import {login} from "../../ApiRequest/internalapi"
 import { useRouter } from "next/navigation";
-import { useFormik } from 'formik';
-import { useState , useEffect } from 'react';
-import loginSchema from '../../Schemas/loginSchema'
+import { useFormik } from "formik";
+import { useState , useEffect } from "react";
+import loginSchema from "../../Schemas/loginSchema"
 import style from "./login.module.css";
 import { useDispatch } from "react-redux";
-import { setUser } from '../../lib/userSlice';
+import { setUser } from "../../lib/userSlice";
 import TextInput from "../../components/TextInput"
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -83,7 +83,8 @@ const Login = () => {
 
        </div>
        {errors.password && touched.password && <p className={style.errorMessageTouch}>{errors.password}</p> }
-      <p  className={style.forgotPassword}>forgot password</p>
+       <p className={style.forgotPassword}>forgot password</p>
+
       <button
         className={style.loginbutton}
         onClick={handleLogin}
