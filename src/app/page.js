@@ -1,8 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import styles from "./page.module.css";
-
+import useAutoLogin from "../hooks/useAutoLogin";
 export default function Home() {
-  return (
+  const loading = useAutoLogin();
+
+  return loading ? (
+    "loading"
+  ) : (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
