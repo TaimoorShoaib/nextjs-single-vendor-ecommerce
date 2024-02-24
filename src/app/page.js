@@ -3,11 +3,12 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import useAutoLogin from "../hooks/useAutoLogin";
+import Loader from "../components/Loader/loader";
 export default function Home() {
   const loading = useAutoLogin();
 
   return loading ? (
-    "loading"
+    <Loader />
   ) : (
     <main className={styles.main}>
       <div className={styles.description}>

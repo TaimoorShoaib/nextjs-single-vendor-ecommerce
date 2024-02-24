@@ -17,7 +17,36 @@ export const login = async (data) => {
   }
   return response;
 };
+export const signup = async (data) => {
+  let response;
 
+  try {
+    response = await api.post("/api/users/signup", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+export const sendEmailForgotPassword = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/users/forgotPassword", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+export const VerifyForgotPasswordApi = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/users/verifyForgotPassword", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
 api.interceptors.response.use(
   (config) => config,
   async (error) => {

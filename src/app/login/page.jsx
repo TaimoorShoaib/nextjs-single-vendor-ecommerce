@@ -12,20 +12,23 @@ import { setUser } from "../../lib/userSlice";
 import TextInput from "../../components/TextInput"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import Loader from "../../components/Loader/loader";
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+  const [loader, setLoader] = useState(false);
+  let user = {}
   const handleLogin = async () => {
     const data = {
       email: values.email,
       password: values.password,
     };
-
+setLoader(true)
     const response = await login(data);
     if (response && response.status === 200) {
       // Set user
-      const user = {
+       user = {
         _id: response.data.user._id,
         email: response.data.user.email,
         username: response.data.user.username,
@@ -33,7 +36,9 @@ const Login = () => {
         isAdmin:response.data.user.isAdmin,
         isVerified:response.data.user.isVerified
       };
+
       dispatch(setUser(user));
+      setLoader(false)
       // Redirect to home page
       router.push("/");
     } else if (response.code === "ERR_BAD_REQUEST") {
@@ -49,16 +54,18 @@ const Login = () => {
     validationSchema: loginSchema,
   });
   //{props.error && <p className={style.errorMessage}>{errors.password}</p>}
+  
   return (
     <div className={style.loginPageBackground}>
+      <div className={style.leftSideImage}>
     <div className={style.loginWrapper}>
     <hr/>
-      <div className={style.loginHeader}>login</div>
+      <div className={style.loginHeader}>{loader ?  "Processing..." :"login" }</div>
       <hr/>
       <div className={style.emailContainer}>
       <PersonOutlinedIcon className={style.lockIcon}/>
       <TextInput
-        type="text"
+        type="email"
         value={values.email}
         name="email"
         onBlur={handleBlur}
@@ -83,7 +90,7 @@ const Login = () => {
 
        </div>
        {errors.password && touched.password && <p className={style.errorMessageTouch}>{errors.password}</p> }
-       <p className={style.forgotPassword}>forgot password</p>
+       <p className={style.forgotPassword} onClick={() => router.push("/forgotPassword")}>forgot password?</p>
 
       <button
         className={style.loginbutton}
@@ -104,6 +111,7 @@ const Login = () => {
         </button>
       </span>
       {error != "" ? <p className={style.errorMessage}>{error}</p> : ""}
+    </div>
     </div>
     </div>
   );
