@@ -11,7 +11,8 @@ import style from "./forgotPassword.module.css";
 import TextInput from "../../components/TextInput";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { sendEmailForgotPassword } from "../../ApiRequest/internalapi";
-
+import useAutoLogin from "../../hooks/useAutoLogin";
+import Loader from "../../components/Loader/loader";
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(false);
@@ -46,7 +47,11 @@ const ForgotPassword = () => {
     validationSchema: sendMailForgotPasswordSchema,
   });
   //{props.error && <p className={style.errorMessage}>{errors.password}</p>}
-  return (
+  const loading1 = useAutoLogin();
+
+  return loading1 ? (
+    <Loader />
+  ) : (
     <div className={style.loginPageBackground}>
       <div className={style.loginWrapper}>
         <hr />

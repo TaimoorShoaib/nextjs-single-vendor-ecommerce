@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./page.module.css";
-import useAutoLogin from "../hooks/useAutoLogin";
-import Loader from "../components/Loader/loader";
-import ParticlesBackground from "../components/LandingPageParticalAnimation/ParticlesBackground";
+import styles from "./about.module.css";
+import useAutoLogin from "../../hooks/useAutoLogin";
+import Loader from "../../components/Loader/loader";
 
 export default function Home() {
   const loading = useAutoLogin();
@@ -13,12 +11,11 @@ export default function Home() {
     <Loader />
   ) : (
     <main className={styles.main}>
-      <ParticlesBackground></ParticlesBackground>
       <div className={styles.content}>
-        <h1 className={styles.h1mainpage}>SpiderMan Far From Home</h1>
+        <h1 className={styles.h1mainpage}>Children Far From Home</h1>
         <p className={styles.description}>
           Helping children who are far from home find comfort, connection, and
-          support.
+          support213333333333333333333333333333333333333333333333311111111111111111111111111111111133333333322222.
         </p>
         <button className={styles.shopButton}>Learn More</button>
       </div>

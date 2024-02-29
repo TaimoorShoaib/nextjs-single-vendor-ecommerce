@@ -40,8 +40,14 @@ export async function POST(req) {
     }
 
     // update refresh token
-    const accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
-    const refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
+    const accessToken = JWTService.signAccessToken(
+      { _id: user._id, isAdmin: user.isAdmin },
+      "30m"
+    );
+    const refreshToken = JWTService.signRefreshToken(
+      { _id: user._id, isAdmin: user.isAdmin },
+      "60m"
+    );
     console.log(user._id);
     try {
       await RefreshToken.updateOne(

@@ -2,12 +2,13 @@ const particlesConfig = {
   autoPlay: true,
   background: {
     color: {
-      value: "#000",
+      value: "#348feb",
     },
-    image: "",
+    image:
+      "url(https://wallup.net/wp-content/uploads/2017/11/23/515948-cityscape-New_York_City-sunset.jpg)",
     position: "",
-    repeat: "",
-    size: "",
+    repeat: "np-repeat",
+    size: "100vw 100vh",
     opacity: 1,
   },
   backgroundMask: {
@@ -216,7 +217,7 @@ const particlesConfig = {
       },
     },
     color: {
-      value: "#ff0000",
+      value: "#ffffff",
       animation: {
         h: {
           count: 0,
@@ -325,7 +326,7 @@ const particlesConfig = {
         mode: "delete",
         value: 0,
       },
-      value: 300,
+      value: 500,
     },
     opacity: {
       value: {

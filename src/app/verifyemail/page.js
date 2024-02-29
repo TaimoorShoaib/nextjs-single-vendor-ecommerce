@@ -5,7 +5,8 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import style from "./verifyemail.module.css";
-
+import useAutoLogin from "../../hooks/useAutoLogin";
+import Loader from "../../components/Loader/loader";
 export default function VerifyEmailPage() {
   const [token, setToken] = useState("");
   const [verified, setVerified] = useState(false);
@@ -31,7 +32,11 @@ export default function VerifyEmailPage() {
     }
   }, [token]);
 
-  return (
+  const loading1 = useAutoLogin();
+
+  return loading1 ? (
+    <Loader />
+  ) : (
     <div className={style.loginPageBackground}>
       <h1 className={style.h1}>Verify Email</h1>
       <h2 className={style.h2}>{token ? `token: ${token}` : "no token"}</h2>

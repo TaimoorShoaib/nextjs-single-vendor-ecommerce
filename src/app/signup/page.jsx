@@ -13,6 +13,8 @@ import TextInput from "../../components/TextInput"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import EmailIcon from '@mui/icons-material/Email';
+import useAutoLogin from "../../hooks/useAutoLogin";
+import Loader from "../../components/Loader/loader";
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -56,7 +58,11 @@ const Login = () => {
     validationSchema: signupSchema,
   });
   //{props.error && <p className={style.errorMessage}>{errors.password}</p>}
-  return (
+  const loading1 = useAutoLogin();
+
+  return loading1 ? (
+    <Loader />
+  ) : (
     <div className={style.loginPageBackground}>
         <div className={style.leftSideImage}>
     <div className={style.loginWrapper}>

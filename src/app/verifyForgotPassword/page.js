@@ -11,7 +11,8 @@ import TextInput from "../../components/TextInput";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { VerifyForgotPasswordApi } from "../../ApiRequest/internalapi";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
+import useAutoLogin from "../../hooks/useAutoLogin";
+import Loader from "../../components/Loader/loader";
 const VerifyForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(false);
@@ -54,8 +55,11 @@ const VerifyForgotPassword = () => {
     const urlToken = window.location.search.split("=")[1];
     values.token = urlToken;
   }, []);
+  const loading1 = useAutoLogin();
 
-  return (
+  return loading1 ? (
+    <Loader />
+  ) : (
     <div className={style.loginPageBackground}>
       <div className={style.loginWrapper}>
         <hr />

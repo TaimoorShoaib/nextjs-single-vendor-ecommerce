@@ -14,6 +14,11 @@ connect();
 export async function GET(req) {
   // get  refreshtoken form the cookies
   const originalRefreshToken = req.cookies.get("refreshToken");
+  // Check if the originalRefreshToken is undefined or null
+  if (!originalRefreshToken) {
+    return NextResponse.json({ message: "unauthorized" }, { status: 401 });
+  }
+
   const originalRefreshTokenValue = originalRefreshToken.value;
   let id;
   try {
@@ -35,8 +40,14 @@ export async function GET(req) {
   }
   // generate new refresh token
   try {
-    const accessToken = JWTService.signAccessToken({ _id: id }, "30m");
-    const refreshToken = JWTService.signRefreshToken({ _id: id }, "60m");
+    const accessToken = JWTService.signAccessToken(
+      { _id: user._id, isAdmin: user.isAdmin },
+      "30m"
+    );
+    const refreshToken = JWTService.signRefreshToken(
+      { _id: user._id, isAdmin: user.isAdmin },
+      "60m"
+    );
     // update the db
     await RefreshToken.updateOne({ _id: id }, { token: refreshToken });
 

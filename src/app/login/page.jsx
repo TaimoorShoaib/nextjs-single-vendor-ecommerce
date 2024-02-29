@@ -12,6 +12,7 @@ import { setUser } from "../../lib/userSlice";
 import TextInput from "../../components/TextInput"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import useAutoLogin from "../../hooks/useAutoLogin";
 import Loader from "../../components/Loader/loader";
 const Login = () => {
   const router = useRouter();
@@ -55,7 +56,11 @@ setLoader(true)
   });
   //{props.error && <p className={style.errorMessage}>{errors.password}</p>}
   
-  return (
+  const loading1 = useAutoLogin();
+
+  return loading1 ? (
+    <Loader />
+  ) : (
     <div className={style.loginPageBackground}>
       <div className={style.leftSideImage}>
     <div className={style.loginWrapper}>
