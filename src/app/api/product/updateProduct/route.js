@@ -14,86 +14,106 @@ const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
 connect();
 
 export async function PUT(req) {
-  const createProductSchema = Joi.object({
-    name: Joi.string().max(30),
-    price: Joi.number(),
-    ratings: Joi.number(),
-    Stock: Joi.number().max(9999),
-    category: Joi.string(),
-    user: Joi.string().regex(mongodbIdPattern).required(),
-    images: Joi.string(),
-    description: Joi.string(),
-    productId: Joi.string().regex(mongodbIdPattern).required(),
-  });
-  const requestBody = await req.json();
-
-  const { error } = createProductSchema.validate(requestBody);
-  if (error) {
-    return NextResponse.json({ error: error.details[0].message }); // Provide specific error message
-  }
-  const {
-    name,
-    price,
-    ratings,
-    Stock,
-    category,
-    user,
-    images,
-    description,
-    productId,
-  } = requestBody;
-
-  let product;
   try {
-    product = await Product.findOne({ _id: productId });
-  } catch (error) {
-    return NextResponse.json({ error: error.message });
-  }
-
-  if (images) {
-    let previousPhoto = product.images;
-
-    previousPhoto = previousPhoto.split("/").at(-1);
-    // delete the previous photo
-    fs.unlinkSync(`src/storage/${previousPhoto}`);
-
-    // read the buffer
-    const buffer = Buffer.from(
-      images.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-      "base64"
-    );
-
-    //give it a name
-    const imagePath = `${Date.now()}-${user}.png`;
-    // save it locally
-    try {
-      fs.writeFileSync(`src/storage/${imagePath}`, buffer);
-    } catch (error) {
-      return NextResponse.json({ error: error.message }); // Provide specific error message
+    const authResult = await auth(req);
+    if (authResult !== null) {
+      // return res.status(authResult.status).json(authResult); // Return authentication error
+      return authResult;
     }
-    await Product.updateOne(
-      { _id: productId },
-      {
-        name,
-        price,
-        ratings,
-        Stock,
-        category,
-        description,
-        images: `${process.env.DOMAIN}/storage/${imagePath}`,
+    const createProductSchema = Joi.object({
+      name: Joi.string().max(30),
+      price: Joi.number(),
+      ratings: Joi.number(),
+      Stock: Joi.number().max(9999),
+      category: Joi.string(),
+      user: Joi.string().regex(mongodbIdPattern).required(),
+      images: Joi.string(),
+      description: Joi.string(),
+      productId: Joi.string().regex(mongodbIdPattern).required(),
+    });
+    const requestBody = await req.json();
+
+    const { error } = createProductSchema.validate(requestBody);
+    if (error) {
+      return NextResponse.json({ error: error.details[0].message }); // Provide specific error message
+    }
+    const {
+      name,
+      price,
+      ratings,
+      Stock,
+      category,
+      user,
+      images,
+      description,
+      productId,
+    } = requestBody;
+    const userExist = await User.findById({ _id: user });
+    if (!userExist) {
+      return NextResponse.json(
+        { message: "User does not exist" },
+        { status: 404 }
+      );
+    } else if (userExist.isAdmin === false) {
+      return NextResponse.json(
+        { message: "you are not an admin" },
+        { status: 401 }
+      );
+    }
+    let product;
+    try {
+      product = await Product.findOne({ _id: productId });
+    } catch (error) {
+      return NextResponse.json({ error: error.message });
+    }
+
+    if (images) {
+      let previousPhoto = product.images;
+
+      previousPhoto = previousPhoto.split("/").at(-1);
+      // delete the previous photo
+      fs.unlinkSync(`src/storage/${previousPhoto}`);
+
+      // read the buffer
+      const buffer = Buffer.from(
+        images.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
+        "base64"
+      );
+
+      //give it a name
+      const imagePath = `${Date.now()}-${user}.png`;
+      // save it locally
+      try {
+        fs.writeFileSync(`src/storage/${imagePath}`, buffer);
+      } catch (error) {
+        return NextResponse.json({ error: error.message }); // Provide specific error message
       }
+      await Product.updateOne(
+        { _id: productId },
+        {
+          name,
+          price,
+          ratings,
+          Stock,
+          category,
+          description,
+          images: `${process.env.DOMAIN}/storage/${imagePath}`,
+        }
+      );
+    } else {
+      await Product.updateOne(
+        { _id: productId },
+        { name, price, ratings, Stock, category, description }
+      );
+    }
+    const response = NextResponse.json(
+      {
+        message: "product updated successfully",
+      },
+      { status: 200 }
     );
-  } else {
-    await Product.updateOne(
-      { _id: productId },
-      { name, price, ratings, Stock, category, description }
-    );
+    return response;
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  const response = NextResponse.json(
-    {
-      message: "product updated successfully",
-    },
-    { status: 200 }
-  );
-  return response;
 }

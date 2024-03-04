@@ -15,6 +15,11 @@ connect();
 
 export async function POST(req) {
   try {
+    const authResult = await auth(req);
+    if (authResult !== null) {
+      // return res.status(authResult.status).json(authResult); // Return authentication error
+      return authResult;
+    }
     // validate
     const getByIdSchema = Joi.object({
       id: Joi.string().regex(mongodbIdPattern).required(),

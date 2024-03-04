@@ -28,7 +28,7 @@ export async function POST(req) {
       Stock: Joi.number().max(9999).required(),
       category: Joi.string().required(),
       user: Joi.string().regex(mongodbIdPattern).required(),
-      images: Joi.string().required(),
+      images: Joi.array().required(),
       description: Joi.string().required(),
     });
     const requestBody = await req.json();
@@ -64,20 +64,38 @@ export async function POST(req) {
       );
     } else if (userExist.isAdmin === true) {
       // read buffer
-      const buffer = Buffer.from(
-        images.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-        "base64"
-      );
+
+      // read buffer
+
+      for (let i = 0; i < images.length; i++) {
+        const imageData = images[i].url;
+        const buffer = new Buffer.from(
+          imageData.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
+          "base64"
+        );
+        const imagePath = `${Date.now()}-${name}-${i}.png`; // Define imagePath here
+        images[i].url = `${process.env.DOMAIN}/storage/${imagePath}`;
+        try {
+          fs.writeFileSync(`src/storage/${imagePath}`, buffer);
+        } catch (error) {
+          return NextResponse.json({ error: error.message });
+        }
+      }
+
+      //const buffer = Buffer.from(
+      //images.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
+      //"base64"
+      //  );
 
       //give image a name
-      const imagePath = `${Date.now()}-${name}.png`;
+      //const imagePath = `${Date.now()}-${name}.png`;
 
       //save it locally E:\TaimoorProjects\Next JS Projects\e-commerce_nextapp\src\storage
-      try {
-        fs.writeFileSync(`src/storage/${imagePath}`, buffer);
-      } catch (error) {
-        return NextResponse.json({ error: error.message }); // Provide specific error message
-      }
+      // try {
+      //  fs.writeFileSync(`src/storage/${imagePath}`, buffer);
+      //} catch (error) {
+      //  return NextResponse.json({ error: error.message }); // Provide specific error message
+      //}
 
       let newProduct;
       try {
@@ -89,7 +107,7 @@ export async function POST(req) {
           numOfReviews,
           category,
           user,
-          images: `${process.env.DOMAIN}/storage/${imagePath}`,
+          images: images.map((image) => ({ url: image.url })), // Convert URLs to objects with 'url' property
           reviews,
           description,
           productSold,

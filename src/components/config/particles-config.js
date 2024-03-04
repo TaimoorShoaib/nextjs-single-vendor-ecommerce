@@ -6,7 +6,8 @@ const particlesConfig = {
     },
     image:
       "url(https://wallup.net/wp-content/uploads/2017/11/23/515948-cityscape-New_York_City-sunset.jpg)",
-    position: "",
+    position: "absolute",
+
     repeat: "np-repeat",
     size: "100vw 100vh",
     opacity: 1,
@@ -25,8 +26,7 @@ const particlesConfig = {
   defaultThemes: {},
   delay: 0,
   fullScreen: {
-    enable: true,
-    zIndex: -1,
+    enable: false,
   },
   detectRetina: true,
   duration: 0,

@@ -3,6 +3,8 @@ import Particles from "react-tsparticles";
 import React from "react";
 import { useCallback,useEffect } from "react";
 import { loadFull } from "tsparticles";
+import styles from "./pageParticle.module.css";
+
 //import Particles from "react-particles";
 import ParticlesConfig from "../config/particles-config";
 const ParticlesBackground = () => {
@@ -15,7 +17,7 @@ const ParticlesBackground = () => {
   }, []);
   return (
     <div id="particles-background">
-      <Particles
+      <Particles className={styles.particlesBackground}
         id="tsparticles"
         particlesLoaded={particlesLoaded}
         init={particlesInit}
@@ -23,7 +25,9 @@ const ParticlesBackground = () => {
         options={ParticlesConfig}
         height="100vh"
         width="100vw"
-      ></Particles>
+      >
+        
+      </Particles>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-
+// user api calls
 export const login = async (data) => {
   let response;
 
@@ -47,6 +47,19 @@ export const VerifyForgotPasswordApi = async (data) => {
   }
   return response;
 };
+// product api calls
+export const GetAllProduct = async () => {
+  let response;
+
+  try {
+    response = await api.post("/api/product/getAllProduct");
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+// blalalallalallalalalsadijasoid
 api.interceptors.response.use(
   (config) => config,
   async (error) => {

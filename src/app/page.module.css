@@ -15,6 +15,7 @@
   overflow: hidden;
 }
 
+
 .content {
   text-align: center;
   z-index: 1;
@@ -45,4 +46,52 @@
 
 .shopButton:hover {
   background-color: #45a049;
+}
+.particlesBackgroundH3 {
+  /* Style your text content */
+  position: absolute;  top: 50%;  left: 50%;  transform: translate(-50%, -50%);  /* Add your text animation styles here (optional) */
+}
+.productCardHome{
+  width: 10px;
+}
+.homeHeading {
+  text-align: center;
+  font-family: Roboto;
+  font-size: 1.4vmax;
+  border-bottom: 1px solid rgba(21, 21, 21, 0.5);
+  width: 20vmax;
+  padding: 1vmax;
+  margin: 5vmax auto;
+  color: rgb(0, 0, 0, 0.7);
+}
+.container {
+  display: flex;
+  margin: 2vmax auto;
+  width: 80vw;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}
+@media screen and (max-width: 667px) {
+  .homeHeading {
+    text-align: center;
+    font-family: Roboto;
+    font-size: 1.4vmax;
+    border-bottom: 1px solid rgba(21, 21, 21, 0.5);
+    width: 20vmax;
+    padding: 1vmax;
+    margin: 5vmax auto;
+    color: rgb(0, 0, 0, 0.7);
+    margin-top: -30vh;
+  }
+  .container {
+    display: flex;
+    margin: 2vmax auto;
+    width: 80vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+
+  }
+
 }

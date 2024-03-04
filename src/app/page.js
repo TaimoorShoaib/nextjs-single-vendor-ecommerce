@@ -1,27 +1,37 @@
 "use client";
 
-import Image from "next/image";
+import image from "../images/login.jpg";
 import styles from "./page.module.css";
 import useAutoLogin from "../hooks/useAutoLogin";
 import Loader from "../components/Loader/loader";
 import ParticlesBackground from "../components/LandingPageParticalAnimation/ParticlesBackground";
-
+import Navbar from "../components/navbar/navbar";
+import HomeText from "./HomeText/page";
+import ProductCard from "../components/ProductCard/page";
 export default function Home() {
   const loading = useAutoLogin();
 
   return loading ? (
     <Loader />
   ) : (
-    <main className={styles.main}>
-      <ParticlesBackground></ParticlesBackground>
-      <div className={styles.content}>
-        <h1 className={styles.h1mainpage}>SpiderMan Far From Home</h1>
-        <p className={styles.description}>
-          Helping children who are far from home find comfort, connection, and
-          support.
-        </p>
-        <button className={styles.shopButton}>Learn More</button>
+    <>
+      <main className={styles.main}>
+        <Navbar />
+        <div>
+          <ParticlesBackground></ParticlesBackground>
+        </div>
+      </main>
+      <h2 className={styles.homeHeading}>Featured Products</h2>
+      <div className={styles.container} id="container">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
       </div>
-    </main>
+    </>
   );
 }
