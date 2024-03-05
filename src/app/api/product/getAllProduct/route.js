@@ -14,19 +14,32 @@ const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
 import ApiFeatures from "../../../../helpers/apifeatures";
 connect();
 
-export async function GET(req) {
+export async function POST(req) {
   try {
+    const getAllProductSchema = Joi.object({
+      name: Joi.string(),
+      page: Joi.number(),
+    });
+    const requestBody = await req.json();
+
+    const { error } = getAllProductSchema.validate(requestBody);
+    if (error) {
+      return NextResponse.json({ error: error.details[0].message }); // Provide specific error message
+    }
+    const { name, page } = requestBody;
+
+    console.log(name);
     const resultPerPage = 8;
     const productsCount = await Product.countDocuments();
 
     // Pass req.query to ApiFeatures constructor
-    const apiFeature = new ApiFeatures(Product.find(), req.query)
-      .search()
-      .filter();
+    const apiFeature = new ApiFeatures(Product.find(), name, page).search();
 
     let products = await apiFeature.query;
 
     let filteredProductsCount = products.length;
+
+    apiFeature.pagination(resultPerPage);
 
     products = await apiFeature.query.clone();
     const response = NextResponse.json(

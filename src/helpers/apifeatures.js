@@ -1,14 +1,15 @@
 class ApiFeatures {
-  constructor(query, queryStr) {
+  constructor(query, name, page) {
     this.query = query;
-    this.queryStr = queryStr;
+    this.name = name;
+    this.page = page;
   }
 
   search() {
-    const keyword = this.queryStr
+    const keyword = this.name
       ? {
           name: {
-            $regex: this.queryStr,
+            $regex: this.name,
             $options: "i",
           },
         }
@@ -18,7 +19,7 @@ class ApiFeatures {
     return this;
   }
 
-  filter() {
+  /*filter() {
     const queryCopy = { ...this.queryStr };
     //   Removing some fields for category
     const removeFields = ["keyword", "page", "limit"];
@@ -34,9 +35,9 @@ class ApiFeatures {
 
     return this;
   }
-
+*/
   pagination(resultPerPage) {
-    const currentPage = Number(this.queryStr.page) || 1;
+    const currentPage = Number(this.page) || 1;
 
     const skip = resultPerPage * (currentPage - 1);
 
