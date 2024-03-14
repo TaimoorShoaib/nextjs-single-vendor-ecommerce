@@ -41,7 +41,9 @@ export default function Home() {
       <h2 className={styles.homeHeading}>Featured Products</h2>
       <div className={styles.container} id="container">
         {products &&
-          products.map((product) => <ProductCard product={product} />)}
+          products.map((product) => (
+            <ProductCard product={product} key={product._id} />
+          ))}
       </div>
     </>
   );
