@@ -1,3 +1,4 @@
+"use client"
 import ReactStars from "react-rating-stars-component";
 import React from "react";
 import style from "./review.module.css"

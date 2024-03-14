@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import styles from "./productcard.module.css";
