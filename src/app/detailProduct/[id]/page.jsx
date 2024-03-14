@@ -173,15 +173,14 @@ const ProductDetails = ({ params }) => {
           </dialog>
 
           {product.reviews && product.reviews[0] ? (
-            <div className={style.reviews}>
-              {product.reviews &&
-                product.reviews.map((review) => (
-                  <ReviewCard key={review._id} review={review} />
-                ))}
-            </div>
-          ) : (
-            <p className={style.noReviews}>No Reviews Yet</p>
-          )}
+  <div className={style.reviews}>
+    {product.reviews.map((review, index) => (
+      <ReviewCard key={index} review={review} />
+    ))}
+  </div>
+) : (
+  <p className={style.noReviews}>No Reviews Yet</p>
+)}
         </>
       )}
     </>
