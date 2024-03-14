@@ -13,6 +13,8 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { sendEmailForgotPassword } from "../../ApiRequest/internalapi";
 import useAutoLogin from "../../hooks/useAutoLogin";
 import Loader from "../../components/Loader/loader";
+import { useSelector } from "react-redux";
+
 const ForgotPassword = () => {
   const isAuth = useSelector((state) => state.user.auth);
 

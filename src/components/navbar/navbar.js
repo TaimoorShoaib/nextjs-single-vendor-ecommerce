@@ -1,7 +1,6 @@
 "use client";
 import style from "./Navbar.module.css";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Navbar() {
   let dispatch = useDispatch();

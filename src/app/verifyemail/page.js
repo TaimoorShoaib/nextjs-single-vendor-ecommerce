@@ -8,6 +8,8 @@ import style from "./verifyemail.module.css";
 import useAutoLogin from "../../hooks/useAutoLogin";
 import Loader from "../../components/Loader/loader";
 import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth";
+import { useSelector } from "react-redux";
+
 export default function VerifyEmailPage() {
   const isAuth = useSelector((state) => state.user.auth);
 

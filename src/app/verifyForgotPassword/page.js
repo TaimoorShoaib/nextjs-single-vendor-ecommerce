@@ -13,7 +13,7 @@ import { VerifyForgotPasswordApi } from "../../ApiRequest/internalapi";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import useAutoLogin from "../../hooks/useAutoLogin";
 import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth";
-
+import { useSelector } from "react-redux";
 import Loader from "../../components/Loader/loader";
 const VerifyForgotPassword = () => {
   const isAuth = useSelector((state) => state.user.auth);
