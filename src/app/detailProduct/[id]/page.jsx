@@ -3,17 +3,13 @@
 import React, { useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import style from "./detailProduct.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"; // Importing useSelector
 import ReactStars from "react-rating-stars-component";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-
-// Import ReviewCard component if available
-// import ReviewCard from "./ReviewCard.js";
 import Loader from "../../../components/Loader/loader.jsx";
 import { GetProduct } from "../../../ApiRequest/internalapi";
 import MetaData from "../../../components/MetaData/metaData.js";
-// import { addItemsToCart } from "../../actions/cartAction.js";
 import Navbar from "../../../components/navbar/navbar";
 import useAutoLogin from "../../../hooks/useAutoLogin";
 import Protected from "../../../components/protected/protected"
