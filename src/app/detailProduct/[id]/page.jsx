@@ -94,7 +94,7 @@ const ProductDetails = ({ params }) => {
                   product.images.map((item, i) => (
                     <img
                       className={style.CarouselImage}
-                      key={i}
+                      key={item._id}
                       src={item.url}
                       alt={`${i} Slide`}
                     />
