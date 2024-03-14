@@ -40,10 +40,12 @@ export async function GET(req) {
   }
   // generate new refresh token
   try {
+    const user = await User.findOne({ _id: id }); // Ensure this happens first
     const accessToken = JWTService.signAccessToken(
       { _id: user._id, isAdmin: user.isAdmin },
       "30m"
-    );
+    ); // Now you can access user._id
+
     const refreshToken = JWTService.signRefreshToken(
       { _id: user._id, isAdmin: user.isAdmin },
       "60m"
@@ -51,7 +53,6 @@ export async function GET(req) {
     // update the db
     await RefreshToken.updateOne({ _id: id }, { token: refreshToken });
 
-    const user = await User.findOne({ _id: id });
     const userDto = new userDTO(user);
     const response = NextResponse.json(
       {

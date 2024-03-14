@@ -1,28 +1,42 @@
-"use client";
+import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
-
 import styles from "./productcard.module.css";
-export default function ProductCard() {
+import Link from "next/link";
+
+export default function ProductCard({ product }) {
+  const [hovered, setHovered] = useState(false);
+
   const options = {
     edit: false,
     color: "rgba(20,20,20,0.1)",
     activeColor: "tomato",
     size: window.innerWidth < 600 ? 20 : 25,
-    value: 3.5,
+    value: product.ratings,
     isHalf: true,
   };
+
   return (
     <div>
-      <a className={styles.productCard} href="/">
-        <img src="https://wallup.net/wp-content/uploads/2017/11/23/515948-cityscape-New_York_City-sunset.jpg" alt={"product.name"} className={styles.productCardimg}   />
-        <p  className={styles.productCardp} >{"product.name"}</p>
+      <Link
+        className={styles.productCard}
+        href={`/detailProduct/${product._id}`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <img
+          className={styles.productImage}
+          src={hovered ? product.images[1].url : product.images[0].url}
+          alt={product.name} // Don't forget to add alt text for accessibility
+        />
+        <p className={styles.productCardp}>{product.name}</p>
         <div className={styles.productCarddiv}>
           <ReactStars {...options} />
-          <span className={styles.productCardSpan}> (7 reviews)</span>
+          <span className={styles.productCardSpan}>
+            ({product.numOfReviews} Reviews)
+          </span>
         </div>
-        <span className={styles.productCardPrice}>{`Rs 3500`}</span>
-      </a>
-
+        <span className={styles.productCardPrice}>{`Rs${product.price}`}</span>
+      </Link>
     </div>
   );
 }

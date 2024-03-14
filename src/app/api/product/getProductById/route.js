@@ -11,6 +11,8 @@ import Product from "../../../../models/product";
 import fs from "fs";
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
+import { auth } from "../../../../helpers/auth";
+
 connect();
 
 export async function POST(req) {

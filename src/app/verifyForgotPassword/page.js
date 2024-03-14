@@ -12,8 +12,11 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { VerifyForgotPasswordApi } from "../../ApiRequest/internalapi";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import useAutoLogin from "../../hooks/useAutoLogin";
+import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth";
+
 import Loader from "../../components/Loader/loader";
 const VerifyForgotPassword = () => {
+  const isAuth = useSelector((state) => state.user.auth);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(false);
   const router = useRouter();
@@ -60,65 +63,67 @@ const VerifyForgotPassword = () => {
   return loading1 ? (
     <Loader />
   ) : (
-    <div className={style.loginPageBackground}>
-      <div className={style.loginWrapper}>
-        <hr />
-        <div className={style.loginHeader}>
-          {loading ? "Processing" : "forgot password"}
-        </div>
-        <hr />
-        <div className={style.emailContainer}>
-          <LockOutlinedIcon className={style.lockIcon} />
-          <TextInput
-            type="password"
-            value={values.password}
-            name="password"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder="Enter your password"
-          />
-        </div>
-        {errors.password && touched.password && (
-          <p className={style.errorMessageTouch}>{errors.password}</p>
-        )}
-        <div className={style.emailContainer}>
-          <LockOutlinedIcon className={style.lockIcon} />
-          <TextInput
-            type="text"
-            value={values.confirmPassword}
-            name="confirmPassword"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder="Confirm Password"
-          />
-        </div>
-        {errors.confirmPassword && touched.confirmPassword && (
-          <p className={style.errorMessageTouch}>{errors.confirmPassword}</p>
-        )}
-        <button
-          className={style.loginbutton}
-          onClick={Submit}
-          disabled={
-            !values.confirmPassword ||
-            errors.confirmPassword ||
-            !values.password ||
-            errors.password
-          }
-        >
-          Submit
-        </button>
-        <span>
-          Dont have a account ?{" "}
+    <PublicStopAuth isAuth={isAuth}>
+      <div className={style.loginPageBackground}>
+        <div className={style.loginWrapper}>
+          <hr />
+          <div className={style.loginHeader}>
+            {loading ? "Processing" : "forgot password"}
+          </div>
+          <hr />
+          <div className={style.emailContainer}>
+            <LockOutlinedIcon className={style.lockIcon} />
+            <TextInput
+              type="password"
+              value={values.password}
+              name="password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Enter your password"
+            />
+          </div>
+          {errors.password && touched.password && (
+            <p className={style.errorMessageTouch}>{errors.password}</p>
+          )}
+          <div className={style.emailContainer}>
+            <LockOutlinedIcon className={style.lockIcon} />
+            <TextInput
+              type="text"
+              value={values.confirmPassword}
+              name="confirmPassword"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              placeholder="Confirm Password"
+            />
+          </div>
+          {errors.confirmPassword && touched.confirmPassword && (
+            <p className={style.errorMessageTouch}>{errors.confirmPassword}</p>
+          )}
           <button
-            className={style.createAccount}
-            onClick={() => router.push("/signup")}
+            className={style.loginbutton}
+            onClick={Submit}
+            disabled={
+              !values.confirmPassword ||
+              errors.confirmPassword ||
+              !values.password ||
+              errors.password
+            }
           >
-            Register
+            Submit
           </button>
-        </span>
-        {error != "" ? <p className={style.errorMessage}>{error}</p> : ""}
+          <span>
+            Dont have a account ?{" "}
+            <button
+              className={style.createAccount}
+              onClick={() => router.push("/signup")}
+            >
+              Register
+            </button>
+          </span>
+          {error != "" ? <p className={style.errorMessage}>{error}</p> : ""}
+        </div>
       </div>
-    </div>
+    </PublicStopAuth>
   );
 };
 

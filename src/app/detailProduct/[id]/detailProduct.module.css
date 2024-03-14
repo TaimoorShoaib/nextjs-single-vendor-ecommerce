@@ -1,0 +1,297 @@
+.ProductDetails {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px;
+  margin-top: 7vh;
+}
+
+.ProductImageContainer {
+  flex: 1;
+  margin-right: 20px;
+}
+.CarouselImage{
+  height: 80vh;
+  width: 70vh;
+  margin-left: 5vw;
+}
+.ProductInfoContainer {
+  flex: 1;
+  padding: 20px;
+  background-color: #f0f2f2;
+  border-radius: 5px;
+  margin-bottom: 20px; /* Add margin at the bottom */
+  padding-bottom: 105px;
+}
+
+.ProductInfoContainer hr {
+  margin: 20px 0; /* Add margin above and below the horizontal line */
+  border: none;
+  border-top: 1px solid #ddd; /* Color of the horizontal line */
+}
+.AddToCartButton {
+  background-color: #ffa41c;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.QuantityControl {
+  display: flex;
+  align-items: center;
+}
+
+.QuantityButton {
+  width: 40px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  background-color: #f0f0f0; /* Adjust the background color as needed */
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem; /* Adjust the font size as needed */
+}
+
+.QuantityInput {
+  width: 60px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  border: 1px solid #ccc; /* Adjust the border as needed */
+  text-align: center;
+  font-size: 1.2rem; /* Adjust the font size as needed */
+}
+.AddToCartButton:hover {
+  background-color: #d89f00;
+}
+.ProductTitle {
+  margin-bottom: 10px;
+}
+
+.ProductTitle h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #111;
+}
+
+.ProductTitle p {
+  font-size: 14px;
+  color: #555;
+}
+
+.ProductRating {
+  margin-bottom: 10px;
+}
+
+.ProductRating span {
+  font-size: 14px;
+  color: #555;
+}
+
+.ProductPrice {
+  margin-bottom: 10px;
+}
+
+.ProductPrice h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #b12704; /* Amazon's price color */
+}
+
+.ProductQuantity {
+  margin-bottom: 20px; /* Increase margin bottom for spacing */
+}
+
+.ProductQuantity div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Add margin between input and buttons */
+}
+
+.ProductQuantity input {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 16px;
+  margin: 0 10px;
+  border: 1px solid #ccc; /* Add border for clarity */
+  border-radius: 3px; /* Add border radius for smoother edges */
+}
+
+.ProductQuantity input:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #007bff; /* Change border color on focus */
+}
+
+
+.ProductStatus {
+  margin-bottom: 10px;
+}
+
+.ProductStatus b {
+  font-size: 16px;
+  color: #007600; /* Green color for in stock */
+}
+
+.ProductDescription {
+  margin-bottom: 20px;
+}
+
+.ProductDescription h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #111;
+}
+
+.ProductDescription p {
+  font-size: 16px;
+  color: #555;
+}
+
+.SubmitReviewButton {
+  
+  background-color: #f0c14b; /* Amazon's add to cart button color */
+  color: #111;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.SubmitReviewButton:hover {
+  background-color: #d1a200; /* Darker shade on hover */
+}
+
+
+.reviewsHeading {
+  color: #000000be;
+  font: 500 1.4vmax "Roboto";
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.226);
+  padding: 1vmax;
+  width: 20vmax;
+  margin: auto;
+  margin-bottom: 4vmax;
+}
+.reviews {
+  display: flex;
+  overflow: auto;
+}
+
+.reviewCard {
+  flex: none;
+
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.226);
+  border: 1px solid rgba(56, 56, 56, 0.116);
+  width: 30vmax;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1vmax;
+  padding: 3vmax;
+}
+.reviewCard > img {
+  width: 5vmax;
+}
+.reviewCard > p {
+  color: rgba(0, 0, 0, 0.836);
+  font: 600 0.9vmax "Roboto";
+}
+.reviewCardComment {
+  color: rgba(0, 0, 0, 0.445);
+  font: 300 0.8vmax cursive;
+}
+
+.noReviews {
+  font: 400 1.3vmax "Gill Sans";
+  text-align: center;
+  color: rgba(0, 0, 0, 0.548);
+}
+
+@media screen and (max-width: 600px) {
+  .ProductDetails {
+    flex-direction: column;
+    height: unset;
+  }
+
+  .ProductDetails > div:last-child {
+    align-items: center;
+  }
+
+  .detailsBlock-1 > h2 {
+    font-size: 2.8vmax;
+    text-align: center;
+  }
+
+  .detailsBlock-1 > p {
+    text-align: center;
+    font-size: 1vmax;
+  }
+
+  .detailsBlock-2 {
+    justify-content: center;
+  }
+  .detailsBlock-2 > span {
+    font-size: 1.5vmax;
+  }
+
+  .detailsBlock-3 > h1 {
+    font: 700 3vmax "Franklin Gothic Medium";
+    text-align: center;
+  }
+
+  .detailsBlock-3-1 {
+    flex-direction: column;
+  }
+
+  .detailsBlock-3-1-1 {
+    padding: 2vmax 0;
+  }
+  .detailsBlock-3-1-1 > button {
+    padding: 1.2vmax;
+    width: 4vmax;
+  }
+
+  .detailsBlock-3-1-1 > input {
+    padding: 1.5vmax;
+    width: 3vmax;
+    font: 400 1.8vmax "Roboto";
+  }
+
+  .detailsBlock-3-1 > button:last-child {
+    font: 500 1.7vmax "Roboto";
+    padding: 1.5vmax;
+    width: 20vmax;
+    margin: 3vmax 0;
+  }
+
+  .detailsBlock-3 > p {
+    padding: 2.5vmax 0;
+    text-align: center;
+    font: 400 2vmax "Roboto";
+  }
+
+  .detailsBlock-4 {
+    font: 500 2.5vmax sans-serif;
+  }
+
+  .detailsBlock-4 > p {
+    font: 300 1.8vmax sans-serif;
+  }
+
+  .submitReview {
+    font: 500 1.7vmax "Roboto";
+    padding: 1.5vmax;
+    width: 20vmax;
+    margin: 3vmax 0;
+  }
+
+  .reviewCard > p {
+    font: 600 3vw "Roboto";
+  }
+  .reviewCardComment {
+    font: 300 5vw cursive;
+  }
+}

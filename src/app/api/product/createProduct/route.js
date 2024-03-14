@@ -11,6 +11,7 @@ import Product from "../../../../models/product";
 import fs from "fs";
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
+//import cloudinary from "cloudinary";
 import { auth } from "../../../../helpers/auth";
 connect();
 
@@ -24,7 +25,6 @@ export async function POST(req) {
     const createProductSchema = Joi.object({
       name: Joi.string().max(30).required(),
       price: Joi.number().required(),
-      ratings: Joi.number().required(),
       Stock: Joi.number().max(9999).required(),
       category: Joi.string().required(),
       user: Joi.string().regex(mongodbIdPattern).required(),
@@ -52,6 +52,13 @@ export async function POST(req) {
       productSold,
     } = requestBody;
     const userExist = await User.findById({ _id: user });
+    const Productname = await User.findOne({ name: name });
+    if (Productname) {
+      return NextResponse.json(
+        { message: "product name is already in use use another product name" },
+        { status: 400 }
+      );
+    }
     if (!userExist) {
       return NextResponse.json(
         { message: "User does not exist" },
@@ -65,9 +72,15 @@ export async function POST(req) {
     } else if (userExist.isAdmin === true) {
       // read buffer
 
+      /*const myCloud = await cloudinary.v2.uploader.upload(images, {
+        folder: "E-commerceDragozProduct",
+        width: 150,
+        crop: "scale",
+      });*/
+
       // read buffer
 
-      for (let i = 0; i < images.length; i++) {
+      /*  for (let i = 0; i < images.length; i++) {
         const imageData = images[i].url;
         const buffer = new Buffer.from(
           imageData.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
@@ -76,11 +89,11 @@ export async function POST(req) {
         const imagePath = `${Date.now()}-${name}-${i}.png`; // Define imagePath here
         images[i].url = `${process.env.DOMAIN}/storage/${imagePath}`;
         try {
-          fs.writeFileSync(`src/storage/${imagePath}`, buffer);
+          fs.writeFileSync(`storage/${imagePath}`, buffer);
         } catch (error) {
           return NextResponse.json({ error: error.message });
         }
-      }
+      }*/
 
       //const buffer = Buffer.from(
       //images.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
@@ -107,7 +120,7 @@ export async function POST(req) {
           numOfReviews,
           category,
           user,
-          images: images.map((image) => ({ url: image.url })), // Convert URLs to objects with 'url' property
+          images, //images.map((image) => ({ url: image.url })), // Convert URLs to objects with 'url' property
           reviews,
           description,
           productSold,

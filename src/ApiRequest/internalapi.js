@@ -48,11 +48,35 @@ export const VerifyForgotPasswordApi = async (data) => {
   return response;
 };
 // product api calls
-export const GetAllProduct = async () => {
+export const GetAllProduct = async (data) => {
   let response;
 
   try {
-    response = await api.post("/api/product/getAllProduct");
+    response = await api.post("/api/product/getAllProduct", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+export const GetProduct = async (id) => {
+  let response;
+
+  try {
+    response = await api.post("/api/product/getProductById", { id });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+// reviews
+
+export const PostReview = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/reviews/createReview", data);
   } catch (error) {
     return error;
   }

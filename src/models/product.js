@@ -5,6 +5,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter product Name"],
     trim: true,
+    unique: true,
   },
   description: {
     type: String,
@@ -21,6 +22,10 @@ const productSchema = new mongoose.Schema({
   },
   images: [
     {
+      public_id: {
+        type: String,
+        required: true,
+      },
       url: {
         type: String,
         required: true,

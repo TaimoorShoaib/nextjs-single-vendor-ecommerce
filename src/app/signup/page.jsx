@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { useState , useEffect } from "react";
 import signupSchema from "../../Schemas/signupSchema"
 import style from "./signup.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { setUser } from "../../lib/userSlice";
 import TextInput from "../../components/TextInput"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -15,7 +15,12 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import EmailIcon from '@mui/icons-material/Email';
 import useAutoLogin from "../../hooks/useAutoLogin";
 import Loader from "../../components/Loader/loader";
+import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth"
+
 const Login = () => {
+  const  isAuth  = useSelector(
+    (state) => state.user.auth
+  );
   const router = useRouter();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -63,6 +68,7 @@ const Login = () => {
   return loading1 ? (
     <Loader />
   ) : (
+    <PublicStopAuth isAuth={isAuth}>
     <div className={style.loginPageBackground}>
         <div className={style.leftSideImage}>
     <div className={style.loginWrapper}>
@@ -166,6 +172,7 @@ const Login = () => {
     </div>
     </div>
     </div>
+    </PublicStopAuth>
   );
 }
 

@@ -14,7 +14,7 @@ export default function Home() {
       <div className={styles.content}>
         <h1 className={styles.h1mainpage}>Children Far From Home</h1>
         <p className={styles.description}>
-          Helping children who are far from home find comfort, connection, and
+          Helping children who are far from home find comfort, connection, and  
           support213333333333333333333333333333333333333333333333311111111111111111111111111111111133333333322222.
         </p>
         <button className={styles.shopButton}>Learn More</button>

@@ -11,48 +11,40 @@ import Product from "../../../../models/product";
 import fs from "fs";
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
-import ApiFeatures from "../../../../helpers/apifeatures";
-
+import { auth } from "../../../../helpers/auth";
 connect();
 
 export async function POST(req) {
   try {
-    const getAllProductSchema = Joi.object({
-      name: Joi.string(),
-      page: Joi.number(),
+    const authResult = await auth(req);
+    if (authResult !== null) {
+      // return res.status(authResult.status).json(authResult); // Return authentication error
+      return authResult;
+    }
+
+    const getProductIdSchema = Joi.object({
+      productId: Joi.string().regex(mongodbIdPattern).required(),
     });
     const requestBody = await req.json();
 
-    const { error } = getAllProductSchema.validate(requestBody);
+    const { error } = getProductIdSchema.validate(requestBody);
     if (error) {
       return NextResponse.json({ error: error.details[0].message }); // Provide specific error message
     }
-    const { name, page } = requestBody;
 
-    console.log(name);
-    const resultPerPage = 8;
-    const productsCount = await Product.countDocuments();
+    const { productId } = requestBody;
+    const product = await Product.findById({ _id: productId });
+    if (!product) {
+      NextResponse.json({ message: "Product not found" }, { status: 404 });
+    }
 
-    // Pass req.query to ApiFeatures constructor
-    const apiFeature = new ApiFeatures(Product.find(), name, page).search();
-
-    let products = await apiFeature.query;
-
-    let filteredProductsCount = products.length;
-
-    apiFeature.pagination(resultPerPage);
-
-    products = await apiFeature.query.clone();
     const response = NextResponse.json(
       {
-        Products: products,
-        success: true,
-        productsCount,
-        resultPerPage,
-        filteredProductsCount,
+        reviews: product.reviews,
       },
       { status: 200 }
     );
+
     return response;
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

@@ -7,7 +7,10 @@ import { useRouter } from "next/navigation";
 import style from "./verifyemail.module.css";
 import useAutoLogin from "../../hooks/useAutoLogin";
 import Loader from "../../components/Loader/loader";
+import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth";
 export default function VerifyEmailPage() {
+  const isAuth = useSelector((state) => state.user.auth);
+
   const [token, setToken] = useState("");
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState(false);
@@ -37,19 +40,21 @@ export default function VerifyEmailPage() {
   return loading1 ? (
     <Loader />
   ) : (
-    <div className={style.loginPageBackground}>
-      <h1 className={style.h1}>Verify Email</h1>
-      <h2 className={style.h2}>{token ? `token: ${token}` : "no token"}</h2>
-      {verified && (
-        <div>
-          <h2>Email Verified</h2>
-        </div>
-      )}
-      {error && (
-        <div>
-          <h2>Error</h2>
-        </div>
-      )}
-    </div>
+    <PublicStopAuth isAuth={isAuth}>
+      <div className={style.loginPageBackground}>
+        <h1 className={style.h1}>Verify Email</h1>
+        <h2 className={style.h2}>{token ? `token: ${token}` : "no token"}</h2>
+        {verified && (
+          <div>
+            <h2>Email Verified</h2>
+          </div>
+        )}
+        {error && (
+          <div>
+            <h2>Error</h2>
+          </div>
+        )}
+      </div>
+    </PublicStopAuth>
   );
 }

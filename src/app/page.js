@@ -8,11 +8,28 @@ import ParticlesBackground from "../components/LandingPageParticalAnimation/Part
 import Navbar from "../components/navbar/navbar";
 import HomeText from "./HomeText/page";
 import ProductCard from "../components/ProductCard/page";
+import { GetAllProduct } from "../ApiRequest/internalapi";
+import { useEffect, useState } from "react";
 export default function Home() {
   const loading = useAutoLogin();
+  const [pages, setPage] = useState(1);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    (async function getAllBlogsApiCall() {
+      const data = {
+        page: pages,
+      };
+      const response = await GetAllProduct(data);
+      if (response.status === 200) {
+        setProducts(response.data.Products);
+      }
+    })();
+
+    setProducts([]);
+  }, []);
 
   return loading ? (
-    <Loader />
+    <Loader text="homepage" />
   ) : (
     <>
       <main className={styles.main}>
@@ -23,14 +40,8 @@ export default function Home() {
       </main>
       <h2 className={styles.homeHeading}>Featured Products</h2>
       <div className={styles.container} id="container">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {products &&
+          products.map((product) => <ProductCard product={product} />)}
       </div>
     </>
   );
