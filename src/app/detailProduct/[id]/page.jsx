@@ -174,8 +174,8 @@ const ProductDetails = ({ params }) => {
 
           {product.reviews && product.reviews[0] ? (
   <div className={style.reviews}>
-    {product.reviews.map((review, index) => (
-      <ReviewCard key={index} review={review} />
+    {product.reviews.map((review) => (
+      <ReviewCard key={review._id} review={review} />
     ))}
   </div>
 ) : (
