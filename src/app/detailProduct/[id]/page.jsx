@@ -17,6 +17,7 @@ import MetaData from "../../../components/MetaData/metaData.js";
 import Navbar from "../../../components/navbar/navbar";
 import useAutoLogin from "../../../hooks/useAutoLogin";
 import Protected from "../../../components/protected/protected"
+import ReviewCard from "../../../components/ReviewCard/review.jsx";
 const ProductDetails = ({ params }) => {
   const loading1 = useAutoLogin();
   const dispatch = useDispatch();
