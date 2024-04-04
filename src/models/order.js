@@ -29,20 +29,8 @@ const orderSchema = new mongoose.Schema({
   },
   orderItems: [
     {
-      name: {
-        type: String,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
       quantity: {
         type: Number,
-        required: true,
-      },
-      image: {
-        type: String,
         required: true,
       },
       product: {
@@ -86,7 +74,6 @@ const orderSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Order", orderSchema);
-
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
+
 export default Order;
