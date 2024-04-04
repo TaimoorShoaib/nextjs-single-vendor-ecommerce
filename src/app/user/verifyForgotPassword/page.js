@@ -4,17 +4,15 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useState, useEffect } from "react";
-import verifyPasswordSchema from "../../Schemas/verifyPasswordSchema";
+import verifyPasswordSchema from "../../../Schemas/verifyPasswordSchema";
 import style from "./forgotPassword.module.css";
-
-import TextInput from "../../components/TextInput";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import { VerifyForgotPasswordApi } from "../../ApiRequest/internalapi";
+import TextInput from "../../../components/TextInput";
+import { VerifyForgotPasswordApi } from "../../../ApiRequest/internalapi";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import useAutoLogin from "../../hooks/useAutoLogin";
-import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth";
+import useAutoLogin from "../../../hooks/useAutoLogin";
+import PublicStopAuth from "../../../components/publicStopAuth/publicStopAuth";
 import { useSelector } from "react-redux";
-import Loader from "../../components/Loader/loader";
+import Loader from "../../../components/Loader/loader";
 const VerifyForgotPassword = () => {
   const isAuth = useSelector((state) => state.user.auth);
   const [loading, setLoading] = useState(false);

@@ -78,7 +78,7 @@ export async function POST(req) {
     product.ratings = avg / product.reviews.length;
     await product.save({ validateBeforeSave: false });
 
-    const response = NextResponse.json({ status: 201 });
+    const response = NextResponse.json({ success: true }, { status: 201 });
 
     return response;
   } catch (error) {

@@ -1,21 +1,21 @@
 "use client";
 
 import React from "react"
-import {signup} from "../../ApiRequest/internalapi"
+import {signup} from "../../../ApiRequest/internalapi"
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { useState , useEffect } from "react";
-import signupSchema from "../../Schemas/signupSchema"
+import signupSchema from "../../../Schemas/signupSchema"
 import style from "./signup.module.css";
 import { useDispatch , useSelector } from "react-redux";
-import { setUser } from "../../lib/userSlice";
-import TextInput from "../../components/TextInput"
+import { setUser } from "../../../lib/userSlice";
+import TextInput from "../../../components/TextInput"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import EmailIcon from '@mui/icons-material/Email';
-import useAutoLogin from "../../hooks/useAutoLogin";
-import Loader from "../../components/Loader/loader";
-import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth"
+import useAutoLogin from "../../../hooks/useAutoLogin";
+import Loader from "../../../components/Loader/loader";
+import PublicStopAuth from "../../../components/publicStopAuth/publicStopAuth"
 
 const Login = () => {
   const  isAuth  = useSelector(

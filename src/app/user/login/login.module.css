@@ -8,7 +8,7 @@
   }
   
   .leftSideImage {
-    background-image: url("../../images/login.jpg");
+    background-image: url("../../../images/login.jpg");
     width: 50vw;
     height: 80vh;
     background-repeat: no-repeat;
@@ -113,7 +113,7 @@
 @media (max-width: 667px) {
    
     .loginPageBackground {
-        background-image: url("../../images/geo.avif");
+        background-image: url("../../../images/geo.avif");
         width: 100vw;
         height: 100vh;
         background-size: cover; /* Adjust to cover the entire background */

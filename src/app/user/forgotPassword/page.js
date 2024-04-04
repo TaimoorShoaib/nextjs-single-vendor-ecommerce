@@ -1,18 +1,17 @@
 "use client";
 
 import React from "react";
-import { login } from "../../ApiRequest/internalapi";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
-import { useState, useEffect } from "react";
-import sendMailForgotPasswordSchema from "../../Schemas/sendMailForgotPasswordSchema";
+import { useState } from "react";
+import sendMailForgotPasswordSchema from "../../../Schemas/sendMailForgotPasswordSchema";
 import style from "./forgotPassword.module.css";
-import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth";
-import TextInput from "../../components/TextInput";
+import PublicStopAuth from "../../../components/publicStopAuth/publicStopAuth";
+import TextInput from "../../../components/TextInput";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import { sendEmailForgotPassword } from "../../ApiRequest/internalapi";
-import useAutoLogin from "../../hooks/useAutoLogin";
-import Loader from "../../components/Loader/loader";
+import { sendEmailForgotPassword } from "../../../ApiRequest/internalapi";
+import useAutoLogin from "../../../hooks/useAutoLogin";
+import Loader from "../../../components/Loader/loader";
 import { useSelector } from "react-redux";
 
 const ForgotPassword = () => {

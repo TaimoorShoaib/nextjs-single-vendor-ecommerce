@@ -1,15 +1,13 @@
 "use client";
 
 import axios from "axios";
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import style from "./verifyemail.module.css";
-import useAutoLogin from "../../hooks/useAutoLogin";
-import Loader from "../../components/Loader/loader";
-import PublicStopAuth from "../../components/publicStopAuth/publicStopAuth";
+import useAutoLogin from "../../../hooks/useAutoLogin";
+import Loader from "../../../components/Loader/loader";
+import PublicStopAuth from "../../../components/publicStopAuth/publicStopAuth";
 import { useSelector } from "react-redux";
-
 export default function VerifyEmailPage() {
   const isAuth = useSelector((state) => state.user.auth);
 

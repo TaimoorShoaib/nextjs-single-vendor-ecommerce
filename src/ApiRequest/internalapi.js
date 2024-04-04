@@ -27,6 +27,18 @@ export const signup = async (data) => {
   }
   return response;
 };
+
+export const signout = async () => {
+  let response;
+
+  try {
+    response = await api.get("/api/users/logoutUser");
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
 export const sendEmailForgotPassword = async (data) => {
   let response;
 
@@ -47,6 +59,7 @@ export const VerifyForgotPasswordApi = async (data) => {
   }
   return response;
 };
+
 // product api calls
 export const GetAllProduct = async (data) => {
   let response;
@@ -64,6 +77,16 @@ export const GetProduct = async (id) => {
 
   try {
     response = await api.post("/api/product/getProductById", { id });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+export const GetAllProducts = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/product/getAllProduct", data);
   } catch (error) {
     return error;
   }

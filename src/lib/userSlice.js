@@ -27,8 +27,8 @@ export const userSlice = createSlice({
       state._id = "";
       state.email = "";
       state.username = "";
-      state.isVerified = isVerified;
-      state.isAdmin = isAdmin;
+      state.isVerified = false;
+      state.isAdmin = false;
       state.auth = false;
     },
   },

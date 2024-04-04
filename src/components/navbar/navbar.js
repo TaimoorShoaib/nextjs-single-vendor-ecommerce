@@ -1,53 +1,59 @@
 "use client";
 import style from "./Navbar.module.css";
 import { useSelector, useDispatch } from "react-redux";
-
+import { resetUser } from "../../lib/userSlice";
+import { signout } from "../../ApiRequest/internalapi";
+import Link from "next/link";
 export default function Navbar() {
   let dispatch = useDispatch();
   let isAuthenticated = useSelector((state) => state.user.auth);
+  const handleSignout = async () => {
+    await signout();
 
+    dispatch(resetUser());
+  };
   return (
     <>
       <nav className={`${style.navbar}`}>
-        <a className={`${style.logo} `} href="/">
+        <Link className={`${style.logo} `} href="/">
           CoinBounce
-        </a>
-        <a className={style.ahead} href="/">
+        </Link>
+        <Link className={style.ahead} href="/">
           Home
-        </a>
-        <a className={style.ahead} href="/crypto">
+        </Link>
+        <Link className={style.ahead} href="/crypto">
           Crypto
-        </a>
-        <a className={style.ahead} href="/blogs">
+        </Link>
+        <Link className={style.ahead} href="/blogs">
           Blogs
-        </a>
-        <a className={style.ahead} href="/submit">
+        </Link>
+        <Link className={style.ahead} href="/submit">
           Submit a blog
-        </a>
+        </Link>
         {isAuthenticated ? (
           <div>
-            <a>
-              <button className={style.signOutButton}>Sign out</button>
-            </a>{" "}
+            <button className={style.signOutButton} onClick={handleSignout}>
+              Sign out
+            </button>
           </div>
         ) : (
           <div>
-            <a
+            <Link
               className={({ isActive }) =>
                 isActive ? style.activeStyle : style.inActiveStyle
               }
-              href="/login"
+              href="/user/login"
             >
               <button className={style.logInButton}>log In</button>
-            </a>
-            <a
+            </Link>
+            <Link
               className={({ isActive }) =>
                 isActive ? style.activeStyle : style.inActiveStyle
               }
-              href="/signup"
+              href="/user/signup"
             >
               <button className={style.signUpButton}>Sign up</button>
-            </a>{" "}
+            </Link>{" "}
           </div>
         )}
       </nav>
