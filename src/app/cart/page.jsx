@@ -12,7 +12,7 @@ import Loader from "../../components/Loader/loader";
 import MetaData from "../../components/MetaData/metaData";
 import Navbar from "../../components/navbar/navbar";
 
-const Cart = ({ history }) => {
+const Cart = () => {
   const loading1 = useAutoLogin();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
@@ -41,7 +41,8 @@ const Cart = ({ history }) => {
   };
 
   const checkoutHandler = () => {
-    history.push("/login?redirect=shipping");
+    //history.push("/login?redirect=shipping");
+    console.log("checkoutHandler")
   };
 
   if (loading1) {
