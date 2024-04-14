@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import playStore from "../../../public/playstore.png";
 import appStore from "../../../public/Appstore.png";
