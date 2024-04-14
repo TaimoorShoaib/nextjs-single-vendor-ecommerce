@@ -45,4 +45,4 @@ const CheckoutSteps = ({ activeStep }) => {
   );
 };
 
-export default CheckoutSteps;
+export default CheckoutSteps; // { activeStep: number } (assuming activeStep is a number)
