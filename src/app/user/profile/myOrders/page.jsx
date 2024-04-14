@@ -5,7 +5,6 @@ import style from "./orders.module.css";
 import { useSelector } from "react-redux";
 import Loader from "../../../../components/Loader/loader"
 import Link from "next/link";
-//import { useAlert } from "react-alert";
 import {Typography} from "@mui/material";
 import MetaData from "../../../../components/MetaData/metaData";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -17,14 +16,13 @@ const MyOrders = () => {
   const loading = useAutoLogin();
   const isAuth = useSelector((state) => state.user.auth);
 
- // const alert = useAlert();
 
   const  user  = useSelector((state) => state.user);
   const [orders ,setOrders] = useState()
   const id = user._id
 console.log(id+"ssssssssssssssssssss")
 useEffect(() => {
-  if (id) { // Ensure id is not empty
+  if (id) { 
     (async function getMyOrders() {
       const response = await getLogInUserOrder(id);
       if (response.status === 200) {
