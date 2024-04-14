@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { GetAllProduct } from "../../../../ApiRequest/internalapi";
 import Pagination from "react-js-pagination";
 import MetaData from "../../../../components/MetaData/metaData"
-import ProductCard from "../../../../components/ProductCard/productCard"
+import ProductCard from "../../../../components/ProductCard/page"
 import Loader from "../../../../components/Loader/loader";
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import Protected from "../../../../components/protected/protected"
