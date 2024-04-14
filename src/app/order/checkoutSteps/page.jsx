@@ -3,9 +3,9 @@ import React, { Fragment } from "react";
 import { Typography, Stepper, StepLabel, Step } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
-import style from  "./checkoutSteps.css";
+import  "./checkoutSteps.css";
 
-const CheckoutSteps = ( activeStep ) => {
+const CheckoutSteps = ( {activeStep} ) => {
   const steps = [
     {
       label: <Typography>Shipping Details</Typography>,

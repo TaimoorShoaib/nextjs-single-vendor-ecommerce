@@ -22,7 +22,7 @@ const ConfirmOrder = () => {
 
   // Check if shippingInfo is defined before accessing its properties
 
-
+ console.log(shippingInfo)
   // Calculate subtotal, tax, and total price
   const subtotal = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
   const shippingCharges = 200;
