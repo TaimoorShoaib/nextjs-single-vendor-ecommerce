@@ -12,7 +12,7 @@ import { useParams } from "next/navigation";
 import useAutoLogin from "../../../../../hooks/useAutoLogin";
 import Protected from "../../../../../components/protected/protected"
 import { getLogInUserOrderDetail } from "../../../../../ApiRequest/internalapi";
-const OrderDetails = ({ match }) => {
+const OrderDetails = () => {
   const loading = useAutoLogin();
 
   const [order , setOrder] = useState({}); // Initialize with an empty object
