@@ -70,7 +70,9 @@ const ConfirmOrder = () => {
     return <Loader/>
   }
   
-  const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
+  const address = shippingInfo
+  ? `${shippingInfo.address || ''}, ${shippingInfo.city || ''}, ${shippingInfo.state || ''}, ${shippingInfo.pinCode || ''}, ${shippingInfo.country || ''}`
+  : '';
   return (
     <>
         
