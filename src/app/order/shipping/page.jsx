@@ -18,31 +18,31 @@ import CheckoutSteps from "../checkoutSteps/page"
 
 const Shipping = () => {
   const dispatch = useDispatch();
-  const router = useRouter()
-  //const alert = useAlert();
+  const router = useRouter();
   const { shippingInfo } = useSelector((state) => state.cart);
 
-  const [address, setAddress] = useState(shippingInfo.address);
-  const [city, setCity] = useState(shippingInfo.city);
-  const [state, setState] = useState(shippingInfo.state);
-  const [country, setCountry] = useState(shippingInfo.country);
-  const [pinCode, setPinCode] = useState(shippingInfo.pinCode);
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
+  // Provide default values if shippingInfo is null or undefined
+  const [address, setAddress] = useState(shippingInfo?.address );
+  const [city, setCity] = useState(shippingInfo?.city );
+  const [state, setState] = useState(shippingInfo?.state );
+  const [country, setCountry] = useState(shippingInfo?.country );
+  const [pinCode, setPinCode] = useState(shippingInfo?.pinCode );
+  const [phoneNo, setPhoneNo] = useState(shippingInfo?.phoneNo );
   const [error, setError] = useState("");
+
   const shippingSubmit = (e) => {
     e.preventDefault();
 
-    if (phoneNo.length < 11 || phoneNo.length > 11) {
-      //alert.error("Phone Number should be 10 digits Long");
-      setError("Phone Number should be 11 digits Long")
+    if (phoneNo.length !== 11) {
+      setError("Phone Number should be 11 digits long");
       return;
     }
+    
     dispatch(
       saveShippingInfo({ address, city, state, country, pinCode, phoneNo })
     );
     router.push("/order/confirm");
   };
-
   return (
     <>
       <MetaData title="Shipping Details" />
