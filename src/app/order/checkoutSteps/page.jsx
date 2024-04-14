@@ -5,7 +5,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import style from  "./checkoutSteps.css";
 
-const CheckoutSteps = ({ activeStep }) => {
+const CheckoutSteps = ( activeStep ) => {
   const steps = [
     {
       label: <Typography>Shipping Details</Typography>,
