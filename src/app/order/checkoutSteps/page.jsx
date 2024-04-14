@@ -3,6 +3,8 @@ import React, { Fragment } from "react";
 import { Typography, Stepper, StepLabel, Step } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
+import PropTypes from "prop-types"; // Import PropTypes
+
 import  "./checkoutSteps.css";
 
 const CheckoutSteps = ({activeStep}) => {
