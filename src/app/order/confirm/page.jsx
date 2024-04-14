@@ -15,64 +15,66 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 const ConfirmOrder = () => {
   const loading1 = useAutoLogin();
-  const  user  = useSelector((state) => state.user);
-  const router = useRouter()
- 
+  const user = useSelector((state) => state.user);
+  const router = useRouter();
   const isAuth = useSelector((state) => state.user.auth);
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.quantity * item.price,
-    0
-  );
+
+  // Check if shippingInfo is defined before accessing its properties
+  const address = shippingInfo
+    ? `${shippingInfo.address || ''}, ${shippingInfo.city || ''}, ${shippingInfo.state || ''}, ${shippingInfo.pinCode || ''}, ${shippingInfo.country || ''}`
+    : '';
+
+  // Calculate subtotal, tax, and total price
+  const subtotal = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
   const shippingCharges = 200;
-
   const tax = subtotal * 0.18;
-
   const totalPrice = subtotal + tax + shippingCharges;
 
-  
   const proceedToPayment = async () => {
     try {
-      const shippingInfoFormatted = {
-        ...shippingInfo,
-        pinCode: parseInt(shippingInfo.pinCode), // Convert pinCode to number
-        phoneNo: parsePhoneNumberFromString(shippingInfo.phoneNo, shippingInfo.country).formatInternational()
-      };
-      
-      const data = {
-        itemsPrice: subtotal,
-        shippingPrice: shippingCharges,
-        taxPrice: tax,
-        totalPrice,
-        shippingInfo: shippingInfoFormatted,
-        orderItems:cartItems,
-        user: user._id
-      };
-      const data1 = {
-        subtotal,
-        shippingCharges,
-        tax,
-        totalPrice,
-      };
-      
-      const response = await CreateOrder(data);
-      if (response.status === 201) {
-        router.push("/");
-        sessionStorage.setItem("orderInfo", JSON.stringify(data1));
+      // Check if shippingInfo is defined before using it
+      if (shippingInfo) {
+        const shippingInfoFormatted = {
+          ...shippingInfo,
+          pinCode: parseInt(shippingInfo.pinCode), // Convert pinCode to number
+          phoneNo: parsePhoneNumberFromString(shippingInfo.phoneNo, shippingInfo.country).formatInternational()
+        };
+        const data = {
+          itemsPrice: subtotal,
+          shippingPrice: shippingCharges,
+          taxPrice: tax,
+          totalPrice,
+          shippingInfo: shippingInfoFormatted,
+          orderItems: cartItems,
+          user: user._id
+        };
+        const data1 = {
+          subtotal,
+          shippingCharges,
+          tax,
+          totalPrice,
+        };
+        const response = await CreateOrder(data);
+        if (response.status === 201) {
+          router.push("/");
+          sessionStorage.setItem("orderInfo", JSON.stringify(data1));
+        } else {
+          console.error("Failed to create order:", response.statusText);
+        }
       } else {
-        console.error("Failed to create order:", response.statusText);
+        console.error("Shipping information is missing.");
       }
     } catch (error) {
       console.error("Error while creating order:", error);
     }
   };
-  if(loading1){
-    return <Loader/>
+
+  if (loading1) {
+    return <Loader />;
   }
   
-  const address = shippingInfo
-  ? `${shippingInfo.address || ''}, ${shippingInfo.city || ''}, ${shippingInfo.state || ''}, ${shippingInfo.pinCode || ''}, ${shippingInfo.country || ''}`
-  : '';
+  
   return (
     <>
         
