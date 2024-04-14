@@ -21,9 +21,7 @@ const ConfirmOrder = () => {
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
 
   // Check if shippingInfo is defined before accessing its properties
-  const address = shippingInfo
-    ? `${shippingInfo.address || ''}, ${shippingInfo.city || ''}, ${shippingInfo.state || ''}, ${shippingInfo.pinCode || ''}, ${shippingInfo.country || ''}`
-    : '';
+
 
   // Calculate subtotal, tax, and total price
   const subtotal = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
@@ -69,7 +67,9 @@ const ConfirmOrder = () => {
       console.error("Error while creating order:", error);
     }
   };
-
+  const address = shippingInfo
+    ? `${shippingInfo.address || ''}, ${shippingInfo.city || ''}, ${shippingInfo.state || ''}, ${shippingInfo.pinCode || ''}, ${shippingInfo.country || ''}`
+    : '';
   if (loading1) {
     return <Loader />;
   }
