@@ -30,8 +30,7 @@ const ConfirmOrder = () => {
 
   const totalPrice = subtotal + tax + shippingCharges;
 
-  const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
-
+  
   const proceedToPayment = async () => {
     try {
       const shippingInfoFormatted = {
@@ -39,7 +38,7 @@ const ConfirmOrder = () => {
         pinCode: parseInt(shippingInfo.pinCode), // Convert pinCode to number
         phoneNo: parsePhoneNumberFromString(shippingInfo.phoneNo, shippingInfo.country).formatInternational()
       };
-
+      
       const data = {
         itemsPrice: subtotal,
         shippingPrice: shippingCharges,
@@ -55,7 +54,7 @@ const ConfirmOrder = () => {
         tax,
         totalPrice,
       };
-  
+      
       const response = await CreateOrder(data);
       if (response.status === 201) {
         router.push("/");
@@ -67,12 +66,14 @@ const ConfirmOrder = () => {
       console.error("Error while creating order:", error);
     }
   };
-
+  if(loading1){
+    return <Loader/>
+  }
+  
+  const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
   return (
     <>
-        {loading1 ? (
-          <Loader />
-        ) : (
+        
     <Protected  isAuth={isAuth} >
       <MetaData title="Confirm Order" />
       <CheckoutSteps activeStep={1} />
@@ -145,7 +146,7 @@ const ConfirmOrder = () => {
         </div>
       </div>
     </Protected>
-    )}
+    
    </>
   );
 };
