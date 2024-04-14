@@ -3,8 +3,7 @@ import React, { Fragment } from "react";
 import { Typography, Stepper, StepLabel, Step } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import "./checkoutSteps.css"; // Assuming CheckoutSteps.css is your CSS file
+import "./checkoutSteps.css";
 
 const CheckoutSteps = ({ activeStep }) => {
   const steps = [
@@ -16,7 +15,6 @@ const CheckoutSteps = ({ activeStep }) => {
       label: <Typography>Confirm Order</Typography>,
       icon: <LibraryAddCheckIcon />,
     }
- 
   ];
 
   const stepStyles = {
@@ -25,7 +23,7 @@ const CheckoutSteps = ({ activeStep }) => {
 
   return (
     <Fragment>
-     <Stepper  alternativeLabel activeStep={activeStep} style={stepStyles} >
+      <Stepper alternativeLabel activeStep={activeStep} style={stepStyles}>
         {steps.map((item, index) => (
           <Step
             key={index}
