@@ -5,7 +5,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import PropTypes from "prop-types"; // Import PropTypes
 
-import  "./checkoutSteps.css";
+import checkoutSteps from "./checkoutSteps.css";
 
 const CheckoutSteps = ({activeStep}) => {
   const steps = [
@@ -52,4 +52,4 @@ CheckoutSteps.propTypes = {
   activeStep: PropTypes.number.isRequired, // activeStep should be a number and is required
 };
 
-export default CheckoutSteps;
+export default CheckoutSteps; // Ensure that you're exporting the CheckoutSteps component
