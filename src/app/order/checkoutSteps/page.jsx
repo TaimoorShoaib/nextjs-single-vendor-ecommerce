@@ -7,7 +7,7 @@ import PropTypes from "prop-types"; // Import PropTypes
 
 import checkoutSteps from "./checkoutSteps.css";
 
-const CheckoutSteps = ({activeStep}) => {
+export default function CheckoutSteps ({activeStep}) {
   const steps = [
     {
       label: <Typography>Shipping Details</Typography>,
@@ -47,9 +47,4 @@ const CheckoutSteps = ({activeStep}) => {
   );
 };
 
-// Define prop types for CheckoutSteps
-CheckoutSteps.propTypes = {
-  activeStep: PropTypes.number.isRequired, // activeStep should be a number and is required
-};
 
-export default CheckoutSteps; // Ensure that you're exporting the CheckoutSteps component
