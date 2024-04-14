@@ -1,5 +1,4 @@
 "use client"
-
 import { useState,useEffect } from "react";
 import style from "./[name]/products.module.css"
 import { useSelector, useDispatch } from "react-redux";
@@ -8,12 +7,10 @@ import Pagination from "react-js-pagination";
 import MetaData from "../../../components/MetaData/metaData"
 import ProductCard from "../../../components/ProductCard/page"
 import Loader from "../../../components/Loader/loader";
-import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import Protected from "../../../components/protected/protected"
 import useAutoLogin from "../../../hooks/useAutoLogin";
 import { useRouter } from 'next/navigation';
 import { useParams } from "next/navigation";
-import { useSearchParams } from 'next/navigation'
 import Slider from "@mui/material/Slider";
 import Navbar from "../../../components/navbar/navbar";
 import Footer from "../../../components/footer/footer";
@@ -22,7 +19,6 @@ import Footer from "../../../components/footer/footer";
 const  Products  =  () => { 
 
   const loading1 = useAutoLogin();
-  const searchParams = useSearchParams()
 
   const params = useParams()
  const router = useRouter()
