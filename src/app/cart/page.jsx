@@ -11,13 +11,14 @@ import Protected from "../../components/protected/protected";
 import Loader from "../../components/Loader/loader";
 import MetaData from "../../components/MetaData/metaData";
 import Navbar from "../../components/navbar/navbar";
+import { useRouter } from 'next/navigation';
 
 const Cart = () => {
   const loading1 = useAutoLogin();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const isAuth = useSelector((state) => state.user.auth);
-    
+    const router = useRouter()
   const increaseQuantity = (id, quantity, stock) => {
     const newQty = quantity + 1;
     console.log(newQty)
@@ -41,7 +42,7 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
-    //history.push("/login?redirect=shipping");
+    router.push("/order/shipping");
     console.log("checkoutHandler")
   };
 
@@ -58,7 +59,7 @@ const Cart = () => {
           <div className={style.emptyCart}>
             <RemoveShoppingCartIcon />
             <h3>No Product in Your Cart</h3>
-            <Link className={style.emptyCarta} href="/products">View Products</Link>
+            <Link className={style.emptyCarta} href="/product/products">View Products</Link>
           </div>
         ) : (
           <div className={style.cartPage}>

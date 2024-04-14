@@ -24,7 +24,7 @@
   
   .pagination {
     display: flex;
-    justify-content: center;
+    justify-content: center;  /* This keeps the buttons centered horizontally */
     padding: 0;
   }
   
@@ -35,6 +35,8 @@
     padding: 1vmax 1.5vmax;
     transition: all 0.3s;
     cursor: pointer;
+    /* Added this line to make items display inline */
+    display: inline-block;
   }
   .pageitem:first-child {
     border-radius: 5px 0 0 5px;
@@ -85,7 +87,7 @@
     cursor: pointer;
     transition: all 0.5s;
   }
-  .category-link:hover {
+  .categorylink:hover {
     color: tomato;
   }
   
@@ -103,7 +105,7 @@
     .pagelink {
       font: 300 1.7vmax "Roboto";
     }
-    .category-link {
+    .categorylink {
       font: 400 1.8vmax "Roboto";
     }
   }

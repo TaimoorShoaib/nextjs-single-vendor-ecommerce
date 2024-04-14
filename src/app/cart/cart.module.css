@@ -7,6 +7,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
+
   }
   .emptyCart > svg {
     font-size: 5vmax;
@@ -33,6 +35,8 @@
   }
   .cartPage {
     padding: 5vmax;
+    overflow-x: hidden;
+ margin-top: 16px;
   }
   
   .cartHeader {
@@ -154,8 +158,8 @@
       padding: 1.5vmax;
     }
   
-    .cartInput > input {
-      width: 2vmax;
+    .cartInputinput {
+      width: 16vmax;
       padding: 1.5vmax;
       font: 400 1.8vmax "Roboto";
     }

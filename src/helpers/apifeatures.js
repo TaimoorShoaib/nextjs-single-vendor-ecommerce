@@ -1,8 +1,9 @@
 class ApiFeatures {
-  constructor(query, name, page) {
+  constructor(query, name, page, filters) {
     this.query = query;
     this.name = name;
     this.page = page;
+    this.filters = filters;
   }
 
   search() {
@@ -19,8 +20,8 @@ class ApiFeatures {
     return this;
   }
 
-  /*filter() {
-    const queryCopy = { ...this.queryStr };
+  filter() {
+    const queryCopy = { ...this.filters };
     //   Removing some fields for category
     const removeFields = ["keyword", "page", "limit"];
 
@@ -29,13 +30,14 @@ class ApiFeatures {
     // Filter For Price and Rating
 
     let queryStr = JSON.stringify(queryCopy);
+
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
 
     this.query = this.query.find(JSON.parse(queryStr));
 
     return this;
   }
-*/
+
   pagination(resultPerPage) {
     const currentPage = Number(this.page) || 1;
 

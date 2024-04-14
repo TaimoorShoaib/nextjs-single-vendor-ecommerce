@@ -9,6 +9,7 @@
   
   .productCard {
     width: 14vmax;
+    height: 20vmax; /* Fixed height for each card */
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -17,6 +18,8 @@
     transition: all 0.5s;
     padding-bottom: 0.5vmax;
   }
+  
+  
   
   .productCardimg {
     width: 14vmax;
@@ -50,45 +53,13 @@
   
   .productCard:hover {
     box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
-  
     transform: translateY(-1vmax);
   }
   
   @media screen and (max-width: 600px) {
     .productCard {
-      width:30vmax;
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: rgb(48, 48, 48);
-      margin: 2vmax;
-      transition: all 0.5s;
-      padding-bottom: 0.5vmax;
-      border-radius: 10px;
-      align-items: center;
-    }
-    
-    
-    .productCardimg {
-      width: 30vmax;
-       border-radius: 10px;
-    }
-    .productCardp {
-      font-size: 2.7vmax;
-    }
-  
-    .productCarddiv{
-      margin: 0vmax;
-      display: block;
-    }
-  
-    .productCardPrice {
-      font-size: 3vmax;
-    }
-  
-    .productCardSpan {
-      margin: 0 0.5vmax;
-      font: 300 2vmax "Roboto";
+      width: 18vmax;
+      
     }
   
   }

@@ -16,6 +16,11 @@
 .ahead{
   font-size: 1.3vw;
   text-decoration:none;
+  transition: color 0.3s ease; /* Added transition for smooth color change */
+}
+.ahead:hover{
+  
+  color: tomato;
 }
 .logo {
   font-size: 32px;

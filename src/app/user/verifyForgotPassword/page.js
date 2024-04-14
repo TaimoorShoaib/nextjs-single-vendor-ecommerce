@@ -31,7 +31,7 @@ const VerifyForgotPassword = () => {
       if (response && response.status === 200) {
         // Redirect to home page
 
-        router.push("/login");
+        router.push("/user/login");
         console.log(response);
       } else if (response.code === "ERR_BAD_REQUEST") {
         setError(response.response.data.message);
@@ -86,7 +86,7 @@ const VerifyForgotPassword = () => {
           <div className={style.emailContainer}>
             <LockOutlinedIcon className={style.lockIcon} />
             <TextInput
-              type="text"
+              type="password"
               value={values.confirmPassword}
               name="confirmPassword"
               onBlur={handleBlur}
@@ -113,7 +113,7 @@ const VerifyForgotPassword = () => {
             Dont have a account ?{" "}
             <button
               className={style.createAccount}
-              onClick={() => router.push("/signup")}
+              onClick={() => router.push("/user/signup")}
             >
               Register
             </button>

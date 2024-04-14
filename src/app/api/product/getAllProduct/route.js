@@ -19,6 +19,7 @@ export async function POST(req) {
   try {
     const getAllProductSchema = Joi.object({
       name: Joi.string(),
+      filters: Joi.object(),
       page: Joi.number(),
     });
     const requestBody = await req.json();
@@ -27,14 +28,16 @@ export async function POST(req) {
     if (error) {
       return NextResponse.json({ error: error.details[0].message }); // Provide specific error message
     }
-    const { name, page } = requestBody;
+    const { name, page, filters } = requestBody;
 
     console.log(name);
     const resultPerPage = 8;
     const productsCount = await Product.countDocuments();
 
     // Pass req.query to ApiFeatures constructor
-    const apiFeature = new ApiFeatures(Product.find(), name, page).search();
+    const apiFeature = new ApiFeatures(Product.find(), name, page, filters)
+      .search()
+      .filter();
 
     let products = await apiFeature.query;
 

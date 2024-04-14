@@ -8,6 +8,8 @@ import Navbar from "../components/navbar/navbar";
 import ProductCard from "../components/ProductCard/page";
 import { GetAllProduct } from "../ApiRequest/internalapi";
 import { useEffect, useState } from "react";
+import FloatFooter from "../components/footer/footer";
+import Footer from "../components/footer/footer";
 export default function Home() {
   const loading = useAutoLogin();
   const [pages, setPage] = useState(1);
@@ -43,6 +45,7 @@ export default function Home() {
             <ProductCard product={product} key={product._id} />
           ))}
       </div>
+      <Footer />
     </>
   );
 }

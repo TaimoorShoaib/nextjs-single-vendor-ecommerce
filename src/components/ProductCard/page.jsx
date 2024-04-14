@@ -17,7 +17,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div>
+    <div className={styles.productCardmain}>
       <Link
         className={styles.productCard}
         href={`/detailProduct/${product._id}`}

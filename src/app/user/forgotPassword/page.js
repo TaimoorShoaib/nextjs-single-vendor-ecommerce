@@ -93,7 +93,7 @@ const ForgotPassword = () => {
             Dont have a account ?{" "}
             <button
               className={style.createAccount}
-              onClick={() => router.push("/signup")}
+              onClick={() => router.push("/user/signup")}
             >
               Register
             </button>

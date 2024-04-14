@@ -6,7 +6,9 @@ import { signout } from "../../ApiRequest/internalapi";
 import Link from "next/link";
 export default function Navbar() {
   let dispatch = useDispatch();
-  let isAuthenticated = useSelector((state) => state.user.auth);
+  let user = useSelector((state) => state.user);
+  let isAuthenticated = user.auth;
+  let isAdmin = user.isAdmin;
   const handleSignout = async () => {
     await signout();
 
@@ -16,20 +18,25 @@ export default function Navbar() {
     <>
       <nav className={`${style.navbar}`}>
         <Link className={`${style.logo} `} href="/">
-          CoinBounce
+          DRAGOZ
         </Link>
         <Link className={style.ahead} href="/">
           Home
         </Link>
-        <Link className={style.ahead} href="/crypto">
-          Crypto
+        <Link className={style.ahead} href="/product/products">
+          Products
         </Link>
-        <Link className={style.ahead} href="/blogs">
-          Blogs
+        <Link className={style.ahead} href="/cart">
+          Cart
         </Link>
-        <Link className={style.ahead} href="/submit">
-          Submit a blog
+        <Link className={style.ahead} href="/user/profile/myProfile">
+          Profile
         </Link>
+        {isAdmin && (
+          <Link className={style.ahead} href="/user/profile/myProfile">
+            DashBoard
+          </Link>
+        )}
         {isAuthenticated ? (
           <div>
             <button className={style.signOutButton} onClick={handleSignout}>

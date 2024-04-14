@@ -24,6 +24,8 @@ const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+  const [loader, setLoader] = useState(false);
+
   const handleLogin = async () => {
      const data = {
         username: values.username,
@@ -32,7 +34,7 @@ const Login = () => {
         password: values.password,
         confirmPassword: values.confirmPassword,
       };
-
+      setLoader(true)
     const response = await signup(data);
     if (response && response.status === 201) {
       // Set user
@@ -46,8 +48,10 @@ const Login = () => {
       };
       dispatch(setUser(user));
       // Redirect to home page
+      setLoader(false)
       router.push("/");
     } else if (response.code === "ERR_BAD_REQUEST") {
+      setLoader(false)
       setError(response.response.data.error);
     }
   };
@@ -73,7 +77,7 @@ const Login = () => {
         <div className={style.leftSideImage}>
     <div className={style.loginWrapper}>
     <hr/>
-      <div className={style.loginHeader}>login</div>
+    <div className={style.loginHeader}>{loader ?  "Processing..." :"singup" }</div>
       <hr/>
 
       <div className={style.emailContainer}>
@@ -160,12 +164,12 @@ const Login = () => {
         Log in
       </button>
       <span>
-        Dont have a account ?{" "}
+        already have a account ?{" "}
         <button
           className={style.createAccount}
-          onClick={() => router.push("/signup")}
+          onClick={() => router.push("/user/login")}
         >
-          Register
+          login
         </button>
       </span>
       {error != "" ? <p className={style.errorMessage}>{error}</p> : ""}

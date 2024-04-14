@@ -11,6 +11,9 @@ import Loader from "../../../../components/Loader/loader";
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import Protected from "../../../../components/protected/protected"
 import useAutoLogin from "../../../../hooks/useAutoLogin";
+import Slider from "@mui/material/Slider";
+import Footer from "../../../../components/footer/footer";
+import Navbar from "../../../../components/navbar/navbar";
 
 const  Products  =  ({ params }) => { 
   const loading1 = useAutoLogin();
@@ -23,7 +26,9 @@ const  Products  =  ({ params }) => {
   const [productsCount,setProductsCount] = useState(0)
   const [resultPerPage,setResultPerPage] = useState(0)
   const [count,setCount] = useState(0)
-  
+  const [filters, setFilters] = useState({})
+  const [loading, setLoading] = useState(true); // Loading state
+
   const categories = [
     "Laptop",
     "Footwear",
@@ -47,7 +52,7 @@ const setCurrentPageNo = (e) => {
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const response = await GetAllProduct({ name, page });
+      const response = await GetAllProduct({ name, page ,filters });
       if (response.status === 200) {
         setProducts(response.data.Products);
         setProductsCount(response.data.productsCount)
@@ -62,20 +67,47 @@ useEffect(() => {
 
   fetchData();
 
-}, [name, page]);
+}, [name, page , filters]);
+console.log(filters)
 const priceHandler = (event, newPrice) => {
   setPrice(newPrice);
+  setFilters({ ...filters, price: { gte: newPrice[0], lte: newPrice[1] } });
 };
-console.log(count+"ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+const ratingHandler = ( event,newRating) => {
+  setRatings(newRating);
+  setFilters({ ...filters, ratings: { gte: newRating} });
+};
+
+const handleCategoryClick = (selectedCategory) => {
+  setCategory(selectedCategory);
+  setFilters({ ...filters, category: selectedCategory.toLowerCase() });
+};
 const  isAuth  = useSelector(
   (state) => state.user.auth
 );
-if (loading1) {
-  return <Loader />;
+
+useEffect(() => {
+  if (products.length === 0) {
+    // Set loading to true initially
+    setLoading(true);
+
+    // Set loading to false after 3000 milliseconds (3 seconds)
+    const timerId = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    // Cleanup function to clear the timer when the component unmounts or when products change
+    return () => clearTimeout(timerId);
+  }
+}, []);
+if(loading1){
+  return  <Loader text={Products}/>
 }
   return (
       
 <Protected isAuth={isAuth}>
+ {loading ? <Loader/> : <>
+  <Navbar/>
           <>
             <MetaData title="PRODUCTS -- ECOMMERCE" />
             <h2 className={style.productsHeading}>Products</h2>
@@ -88,40 +120,37 @@ if (loading1) {
             <div className={style.filterBox}>
             <div>
 <label htmlFor="price">Price:</label>
-<input
-  type="range"
-  id="price"
-  name="price"
-  value={price[1]}
-  min="0"
-  max="25000"
-  onChange={(e) => setPrice([price[0], parseInt(e.target.value)])}
-/>
-<span>{price[1]}</span>
+<Slider
+              value={price}
+              onChange={priceHandler}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              min={0}
+              max={25000}
+            />
 </div>
               <p>Categories</p>
               <ul className={style.categoryBox}>
-                {categories.map((category) => (
-                  <li
-                    className={style.categorylink}
-                    key={category}
-                    onClick={() => setCategory(category)}
-                  >
-                    {category}
-                  </li>
-                ))}
-              </ul>
+            {categories.map((cat) => (
+              <li
+                className={style.categorylink}
+                key={cat}
+                onClick={() => handleCategoryClick(cat)}
+              >
+                {cat}
+              </li>
+            ))}
+          </ul>
               <fieldset>
                 <p component="legend">Ratings Above</p>
-                <LinearScaleIcon
-value={ratings}
-onChange={(e, newRating) => {
-  setRatings(newRating);
-}}
-aria-labelledby="continuous-slider"
-min={0}
-max={5}
-/>
+                <Slider
+                value={ratings}
+                onChange={ratingHandler}
+                aria-labelledby="continuous-slider"
+                valueLabelDisplay="auto"
+                min={0}
+                max={5}
+              />
               </fieldset>
             </div>
             {resultPerPage < count && (
@@ -143,6 +172,8 @@ max={5}
               </div>
             )}
           </>
+          <Footer/>
+          </>}
           </Protected>
     
     );

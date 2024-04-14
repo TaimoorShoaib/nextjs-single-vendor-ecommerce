@@ -39,6 +39,28 @@ export const signout = async () => {
   return response;
 };
 
+//update password
+export const updatePassword = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/users/updatePassword", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+//update Profile
+export const updateProfile = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/users/updateProfile", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
 export const sendEmailForgotPassword = async (data) => {
   let response;
 
@@ -100,6 +122,41 @@ export const PostReview = async (data) => {
 
   try {
     response = await api.post("/api/reviews/createReview", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+// order
+
+export const CreateOrder = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/order/createOrder", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+export const getLogInUserOrder = async (id) => {
+  let response;
+
+  try {
+    response = await api.post("/api/order/getloggedInUserOrder", { id });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+export const getLogInUserOrderDetail = async (id) => {
+  let response;
+
+  try {
+    response = await api.post("/api/order/getSingleOrder", { id });
   } catch (error) {
     return error;
   }

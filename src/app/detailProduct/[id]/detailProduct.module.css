@@ -4,8 +4,8 @@
   align-items: flex-start;
   padding: 30px;
   margin-top: 7vh;
+  overflow-x: hidden;
 }
-
 .ProductImageContainer {
   flex: 1;
   margin-right: 20px;
@@ -212,10 +212,23 @@
 
 @media screen and (max-width: 600px) {
   .ProductDetails {
+    display: block;
     flex-direction: column;
     height: unset;
   }
-
+  .CarouselImage{
+    height: 50vh;
+    width: 80vw;
+    margin-left: 2vw;
+    border: solid black 1px;
+    border-radius: 5px;
+  }
+  .ProductImageContainer {
+    flex: 1;
+    margin-right: 20px;
+    width: 50vh;
+    
+  }
   .ProductDetails > div:last-child {
     align-items: center;
   }

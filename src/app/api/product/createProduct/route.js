@@ -107,13 +107,15 @@ export async function POST(req) {
 
       let newProduct;
       try {
+        let categorySmall = category.toLowerCase();
+
         newProduct = new Product({
           name,
           price,
           ratings,
           Stock,
           numOfReviews,
-          category,
+          category: categorySmall,
           user,
           images, //images.map((image) => ({ url: image.url })), // Convert URLs to objects with 'url' property
           reviews,

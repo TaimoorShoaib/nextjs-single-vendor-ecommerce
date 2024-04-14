@@ -47,6 +47,7 @@ setLoader(true)
       // Redirect to home page
       router.push("/");
     } else if (response.code === "ERR_BAD_REQUEST") {
+      setLoader(false)
       setError(response.response.data.message);
     }
   };
@@ -100,7 +101,7 @@ setLoader(true)
 
        </div>
        {errors.password && touched.password && <p className={style.errorMessageTouch}>{errors.password}</p> }
-       <p className={style.forgotPassword} onClick={() => router.push("/forgotPassword")}>forgot password?</p>
+       <p className={style.forgotPassword} onClick={() => router.push("/user/forgotPassword")}>forgot password?</p>
 
       <button
         className={style.loginbutton}
@@ -115,7 +116,7 @@ setLoader(true)
         Dont have a account ?{" "}
         <button
           className={style.createAccount}
-          onClick={() => router.push("/signup")}
+          onClick={() => router.push("/user/signup")}
         >
           Register
         </button>
