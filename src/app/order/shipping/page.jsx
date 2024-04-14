@@ -29,13 +29,11 @@ const Shipping = () => {
   const [pinCode, setPinCode] = useState(shippingInfo.pinCode);
   const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
   const [error, setError] = useState("");
-console.log(state)
   const shippingSubmit = (e) => {
     e.preventDefault();
 
     if (phoneNo.length < 11 || phoneNo.length > 11) {
       //alert.error("Phone Number should be 10 digits Long");
-      console.log("Phone Number should be 11 digits Long");
       setError("Phone Number should be 11 digits Long")
       return;
     }

@@ -60,7 +60,7 @@ useEffect(() => {
         setCount(response.data.filteredProductsCount)
       }
     } catch (error) {
-      console.log(error);
+      console.log("Internal server error");
       // Handle error here, e.g., set error state
     }
   };
@@ -68,7 +68,6 @@ useEffect(() => {
   fetchData();
 
 }, [name, page , filters]);
-console.log(filters)
 const priceHandler = (event, newPrice) => {
   setPrice(newPrice);
   setFilters({ ...filters, price: { gte: newPrice[0], lte: newPrice[1] } });

@@ -16,7 +16,6 @@ const OrderDetails = () => {
   const loading = useAutoLogin();
 
   const [order , setOrder] = useState({}); // Initialize with an empty object
-  console.log(order)
   const params = useParams()
   const isAuth = useSelector((state) => state.user.auth);
 const id = params.id

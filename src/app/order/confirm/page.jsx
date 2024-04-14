@@ -49,7 +49,6 @@ const ConfirmOrder = () => {
         orderItems:cartItems,
         user: user._id
       };
-      console.log(data)
       const data1 = {
         subtotal,
         shippingCharges,
@@ -58,7 +57,6 @@ const ConfirmOrder = () => {
       };
   
       const response = await CreateOrder(data);
-      console.log("Response from server:", response); // Add this line for debugging
       if (response.status === 201) {
         router.push("/");
         sessionStorage.setItem("orderInfo", JSON.stringify(data1));

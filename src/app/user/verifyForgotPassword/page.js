@@ -32,7 +32,6 @@ const VerifyForgotPassword = () => {
         // Redirect to home page
 
         router.push("/user/login");
-        console.log(response);
       } else if (response.code === "ERR_BAD_REQUEST") {
         setError(response.response.data.message);
       }

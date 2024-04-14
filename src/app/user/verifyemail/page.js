@@ -22,7 +22,6 @@ export default function VerifyEmailPage() {
       router.push("/");
     } catch (error) {
       setError(true);
-      console.log(error.response.message);
     }
   };
   useEffect(() => {

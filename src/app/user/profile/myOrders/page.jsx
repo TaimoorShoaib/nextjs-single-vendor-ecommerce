@@ -20,7 +20,6 @@ const MyOrders = () => {
   const  user  = useSelector((state) => state.user);
   const [orders ,setOrders] = useState()
   const id = user._id
-console.log(id+"ssssssssssssssssssss")
 useEffect(() => {
   if (id) { 
     (async function getMyOrders() {

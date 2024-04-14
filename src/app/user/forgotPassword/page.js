@@ -32,7 +32,6 @@ const ForgotPassword = () => {
         // Redirect to home page
 
         setMessage(true);
-        console.log(response);
       } else if (response.code === "ERR_BAD_REQUEST") {
         setError(response.response.data.message);
       }

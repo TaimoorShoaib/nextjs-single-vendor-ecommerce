@@ -56,7 +56,7 @@ const  Products  =  () => {
  
  */
  
-console.log(filters )
+
   const setCurrentPageNo = (e) => {
     setPage(e);
   };
@@ -64,7 +64,6 @@ console.log(filters )
     const fetchData = async () => {
       try {
         const response = await GetAllProduct({ name, page , filters });
-        console.log(response)
         if (response.status === 200) {
           setProducts(response.data.Products);
           //if(category !== null){
@@ -77,7 +76,7 @@ console.log(filters )
           setCount(response.data.filteredProductsCount)
         }
       } catch (error) {
-        console.log(error);
+        console.log("Internal server error");
         // Handle error here, e.g., set error state
       }
     };
