@@ -67,6 +67,14 @@
   background-color: #45a049;
 }
 @media screen and (max-width: 667px) {
+  .main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    overflow: hidden;
+  }
   .particlesBackground {
     background-position: center;
     background-repeat: no-repeat;
@@ -79,6 +87,85 @@
     justify-content: center;
     color: white;
     margin-top: -30vh;
+    margin-right: 4px;
+   
+    
+  }
+  .particlesBackground::after {
+    content: "";
+    width: 100vw;
+    height: 100vmin;
+    background-color: #ffffff;
+    position: absolute;
+    top: 0%;
+    left: 0;
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+    max-width: 100%;
+   
+    
+  }
+}
+
+@media screen and (max-width: 932px) {
+  .main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    overflow: hidden;
+  }
+  .particlesBackground {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vmin;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-top: -40vh;
+    margin-right: 4px;
+  }
+  .particlesBackground::after {
+    content: "";
+    width: 100vw;
+    height: 100vmin;
+    background-color: #ffffff;
+    position: absolute;
+    top: 0%;
+    left: 0;
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+    max-width: 100%;
+   
+    
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    overflow: hidden;
+  }
+  .particlesBackground {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vmin;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-top: -40vh;
+    margin-right: 9px;
   }
   .particlesBackground::after {
     content: "";
