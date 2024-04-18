@@ -61,6 +61,29 @@ export const updateProfile = async (data) => {
   }
   return response;
 };
+
+export const GetAllUsersAdmin = async () => {
+  let response;
+
+  try {
+    response = await api.get("/api/users/getAllUsers");
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+//delete user deleteUserAdmin
+export const deleteUserAdmin = async (data) => {
+  let response;
+
+  try {
+    response = await api.delete("/api/users/deleteUser", { data });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
 export const sendEmailForgotPassword = async (data) => {
   let response;
 
@@ -93,7 +116,28 @@ export const GetAllProduct = async (data) => {
   }
   return response;
 };
+//delete user deleteUserAdmin
+export const deleteProductAdmin = async (data) => {
+  let response;
 
+  try {
+    response = await api.delete("/api/product/deleteProduct", { data });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+export const GetAllProductAdmin = async () => {
+  let response;
+
+  try {
+    response = await api.get("/api/product/getAllProductAdmin");
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
 export const GetProduct = async (id) => {
   let response;
 

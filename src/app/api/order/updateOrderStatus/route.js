@@ -11,14 +11,14 @@ async function updateStockDelivered(id, quantity) {
   const product = await Product.findById(id);
 
   product.Stock -= quantity;
-
+  product.productSold += quantity;
   await product.save({ validateBeforeSave: false });
 }
 async function updateStockProcessing(id, quantity) {
   const product = await Product.findById(id);
 
   product.Stock += quantity;
-
+  product.productSold -= quantity;
   await product.save({ validateBeforeSave: false });
 }
 export async function POST(req) {
