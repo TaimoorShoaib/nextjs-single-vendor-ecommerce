@@ -14,6 +14,7 @@ export default function Home() {
   const loading = useAutoLogin();
   const [pages, setPage] = useState(1);
   const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState([]);
   useEffect(() => {
     (async function getAllBlogsApiCall() {
       const data = {
@@ -22,13 +23,14 @@ export default function Home() {
       const response = await GetAllProduct(data);
       if (response.status === 200) {
         setProducts(response.data.Products);
+        setProductsLoading(response.data.Products);
       }
     })();
 
     setProducts([]);
   }, []);
 
-  return loading ? (
+  return loading && productsLoading.length === 0 ? (
     <Loader text="homepage" />
   ) : (
     <>

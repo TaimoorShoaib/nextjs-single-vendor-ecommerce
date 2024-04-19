@@ -4,8 +4,10 @@ import User from "../../../../models/usermodel";
 import { NextResponse } from "next/server";
 import Product from "../../../../models/product";
 import fs from "fs";
+import cloudinary from "cloudinary";
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
+
 //import cloudinary from "cloudinary";
 import { auth } from "../../../../helpers/auth";
 connect();
@@ -65,45 +67,30 @@ export async function POST(req) {
         { status: 401 }
       );
     } else if (userExist.isAdmin === true) {
-      // read buffer
+      cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+      });
 
-      /*const myCloud = await cloudinary.v2.uploader.upload(images, {
-        folder: "E-commerceDragozProduct",
-        width: 150,
-        crop: "scale",
-      });*/
+      let imagesArray = [];
+      if (typeof images === "string") {
+        imagesArray.push(images);
+      } else {
+        imagesArray = images;
+      }
+      let imagesLink = [];
 
-      // read buffer
+      for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+          folder: "products",
+        });
 
-      /*  for (let i = 0; i < images.length; i++) {
-        const imageData = images[i].url;
-        const buffer = new Buffer.from(
-          imageData.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-          "base64"
-        );
-        const imagePath = `${Date.now()}-${name}-${i}.png`; // Define imagePath here
-        images[i].url = `${process.env.DOMAIN}/storage/${imagePath}`;
-        try {
-          fs.writeFileSync(`storage/${imagePath}`, buffer);
-        } catch (error) {
-          return NextResponse.json({ error: error.message });
-        }
-      }*/
-
-      //const buffer = Buffer.from(
-      //images.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-      //"base64"
-      //  );
-
-      //give image a name
-      //const imagePath = `${Date.now()}-${name}.png`;
-
-      //save it locally E:\TaimoorProjects\Next JS Projects\e-commerce_nextapp\src\storage
-      // try {
-      //  fs.writeFileSync(`src/storage/${imagePath}`, buffer);
-      //} catch (error) {
-      //  return NextResponse.json({ error: error.message }); // Provide specific error message
-      //}
+        imagesLink.push({
+          public_id: result.public_id,
+          url: result.secure_url,
+        });
+      }
 
       let newProduct;
       try {
@@ -117,7 +104,7 @@ export async function POST(req) {
           numOfReviews,
           category: categorySmall,
           user,
-          images, //images.map((image) => ({ url: image.url })), // Convert URLs to objects with 'url' property
+          images: imagesLink, //images.map((image) => ({ url: image.url })), // Convert URLs to objects with 'url' property
           reviews,
           description,
           productSold,
@@ -137,6 +124,9 @@ export async function POST(req) {
       return response;
     }
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

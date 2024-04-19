@@ -63,6 +63,33 @@ export const deleteReviews = (reviewId, productId) => async (dispatch) => {
   }
 };
 
+// Create Product
+export const createProduct = (productData) => async (dispatch) => {
+  try {
+    dispatch({ type: "NEW_PRODUCT_REQUEST" });
+
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+
+    const { data } = await axios.post(
+      `/api/product/createProduct`,
+      productData,
+      config
+    );
+
+    dispatch({
+      type: "NEW_PRODUCT_SUCCESS",
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "NEW_PRODUCT_FAIL",
+      payload: error.response.data.message,
+    });
+  }
+};
+
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: "CLEAR_ERRORS" });

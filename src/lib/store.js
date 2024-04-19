@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import user from "./userSlice.js";
 import { cartReducer } from "./reducers/cartReducer.js";
-import { newReviewReducer } from "./reducers/productReducer.js";
+import {
+  newProductReducer,
+  newReviewReducer,
+} from "./reducers/productReducer.js";
 let initialState = {
   cartItems: [], // Set default value for cartItems
 };
@@ -20,7 +23,12 @@ if (typeof window !== "undefined") {
 
 export const makeStore = () => {
   return configureStore({
-    reducer: { user, cart: cartReducer, newReview: newReviewReducer }, // Update reducer key
+    reducer: {
+      user,
+      cart: cartReducer,
+      newReview: newReviewReducer,
+      newProduct: newProductReducer,
+    }, // Update reducer key
     preloadedState: { cart: initialState }, // Provide initial state directly
   });
 };

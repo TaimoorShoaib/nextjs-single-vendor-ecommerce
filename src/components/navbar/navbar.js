@@ -29,6 +29,9 @@ export default function Navbar() {
         <Link className={style.ahead} href="/cart">
           Cart
         </Link>
+        <Link className={style.ahead} href="/search">
+          search
+        </Link>
         <Link className={style.ahead} href="/user/profile/myProfile">
           Profile
         </Link>

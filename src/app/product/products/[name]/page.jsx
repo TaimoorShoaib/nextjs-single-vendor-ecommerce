@@ -23,6 +23,8 @@ const  Products  =  ({ params }) => {
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
   const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState([]);
+
   const [productsCount,setProductsCount] = useState(0)
   const [resultPerPage,setResultPerPage] = useState(0)
   const [count,setCount] = useState(0)
@@ -55,6 +57,7 @@ useEffect(() => {
       const response = await GetAllProduct({ name, page ,filters });
       if (response.status === 200) {
         setProducts(response.data.Products);
+        setProductsLoading(response.data.Products)
         setProductsCount(response.data.productsCount)
         setResultPerPage(response.data.resultPerPage)
         setCount(response.data.filteredProductsCount)
@@ -104,8 +107,9 @@ if(loading1){
 }
   return (
       
-<Protected isAuth={isAuth}>
- {loading ? <Loader/> : <>
+    <>
+    {loading1 || productsLoading === 0 ? <Loader/> : <>
+    <Protected isAuth={isAuth}>
   <Navbar/>
           <>
             <MetaData title="PRODUCTS -- ECOMMERCE" />
@@ -171,10 +175,13 @@ if(loading1){
               </div>
             )}
           </>
+          
           <Footer/>
-          </>}
           </Protected>
-    
+          </>
+          }
+          
+    </>
     );
 }
 

@@ -26,12 +26,13 @@ const  Products  =  () => {
     const [price, setPrice] = useState([0, 25000]);
     const [ratings, setRatings] = useState(0);
     const [products, setProducts] = useState([]);
+    const [productsLoading, setProductsLoading] = useState([]);
     const [productsCount,setProductsCount] = useState(0)
     const [resultPerPage,setResultPerPage] = useState(0)
     const [count,setCount] = useState(0)
     const [filters, setFilters] = useState({});
     const [loading, setLoading] = useState(true); // Loading state
-
+      
     const categories = [
       "Laptop",
       "Footwear",
@@ -62,6 +63,7 @@ const  Products  =  () => {
         const response = await GetAllProduct({ name, page , filters });
         if (response.status === 200) {
           setProducts(response.data.Products);
+          setProductsLoading(response.data.Products)
           //if(category !== null){
           //  const filteredProducts = response.data.Products.filter(product => product.category === category);
           //  setProducts(filteredProducts);
@@ -110,12 +112,11 @@ useEffect(() => {
     return () => clearTimeout(timerId);
   }
 }, []);
-if(loading1){
-  return  <Loader text={Products}/>
-}
+
     return (
-      <Protected isAuth={isAuth}>
-       {loading1 && loading ? <Loader/> : <>
+      <>
+       {loading1 || productsLoading === 0 ? <Loader/> : <>
+       <Protected isAuth={isAuth}>
           <Navbar/>
             <>
               <MetaData title="PRODUCTS -- ECOMMERCE" />
@@ -183,8 +184,12 @@ if(loading1){
               )}
             </>
             <Footer/>
-        </>}
-            </Protected>
+              </Protected>
+        </>
+        
+      
+        }
+            </>
       );
 }
 
