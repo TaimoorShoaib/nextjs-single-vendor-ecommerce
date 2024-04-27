@@ -1,3 +1,37 @@
+export const productReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "UPDATE_PRODUCT_REQUEST":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "UPDATE_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
+    case "UPDATE_PRODUCT_FAIL":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case "UPDATE_PRODUCT_RESET":
+      return {
+        ...state,
+        isUpdated: false,
+      };
+    case "CLEAR_ERRORS":
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
 export const newReviewReducer = (state = {}, action) => {
   switch (action.type) {
     case "NEW_REVIEW_REQUEST":

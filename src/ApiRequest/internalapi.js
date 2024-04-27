@@ -73,6 +73,39 @@ export const GetAllUsersAdmin = async () => {
   return response;
 };
 
+// orders
+export const getAllOrder = async (id) => {
+  let response;
+
+  try {
+    response = await api.post("/api/order/getAllOrder", { id });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+export const deleteOrder = async (data) => {
+  let response;
+
+  try {
+    response = await api.delete("/api/order/deleteOrder", { data });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+//get logged in user
+// orders
+export const getSingleOrder = async (id) => {
+  let response;
+
+  try {
+    response = await api.post("/api/order/getSingleOrder", { id });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
 //delete user deleteUserAdmin
 export const deleteUserAdmin = async (data) => {
   let response;
@@ -122,6 +155,18 @@ export const deleteProductAdmin = async (data) => {
 
   try {
     response = await api.delete("/api/product/deleteProduct", { data });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+//delete user updateUserAdmin
+export const updateUserAdmin = async (data) => {
+  let response;
+
+  try {
+    response = await api.post("/api/users/updateuser", data);
   } catch (error) {
     return error;
   }

@@ -89,7 +89,32 @@ export const createProduct = (productData) => async (dispatch) => {
     });
   }
 };
+// Update Product
+export const updateProduct = (productData) => async (dispatch) => {
+  try {
+    dispatch({ type: "UPDATE_PRODUCT_REQUEST" });
 
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    console.log(productData);
+    const { data } = await axios.put(
+      `/api/product/updateProduct`,
+      productData,
+      config
+    );
+
+    dispatch({
+      type: "UPDATE_PRODUCT_SUCCESS",
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: "UPDATE_PRODUCT_FAIL",
+      payload: error.response.data.message,
+    });
+  }
+};
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: "CLEAR_ERRORS" });

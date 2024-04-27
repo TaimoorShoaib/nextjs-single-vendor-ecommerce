@@ -21,8 +21,12 @@ export async function POST(req) {
       return authResult;
     }
     const userRegisterSchema = Joi.object({
-      username: Joi.string().required(),
+      username: Joi.string().min(5).max(30),
+      email: Joi.string().email(),
+      isVerified: Joi.boolean(),
+      isAdmin: Joi.boolean(),
       userId: Joi.string().regex(mongodbIdPattern).required(),
+      ownerId: Joi.string().regex(mongodbIdPattern).required(),
     });
 
     const requestBody = await req.json(); // Use 'req.json()' for NextRequest
@@ -34,21 +38,30 @@ export async function POST(req) {
       );
     }
 
-    const { username, userId } = requestBody;
+    const { username, name, email, isVerified, isAdmin, userId, ownerId } =
+      requestBody;
+    const owner = await User.findById(ownerId);
     const user = await User.findById(userId);
-
-    if (username === user.username) {
+    if (owner.isAdmin === false) {
       return NextResponse.json(
-        { error: "You have not changed the name" },
+        { message: "you are not an admin" },
+        { status: 401 }
+      );
+    } else if (!username && !name && !email && !isVerified && !isAdmin) {
+      return NextResponse.json(
+        { message: "You have not updated anything" },
         { status: 400 }
       );
     }
-
-    user.username = username;
+    user.username = username ? username : user.username;
+    user.name = name ? name : user.name;
+    user.email = email ? email : user.email;
+    user.isVerified = isVerified;
+    user.isAdmin = isAdmin;
     await user.save();
 
     return NextResponse.json(
-      { message: "username updated successfully" },
+      { message: "user updated successfully" },
       { status: 201 }
     );
   } catch (error) {

@@ -9,6 +9,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "../../../../helpers/mailer";
 import Product from "../../../../models/product";
 import fs from "fs";
+import { auth } from "../../../../helpers/auth";
+import cloudinary from "cloudinary";
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
 connect();
@@ -20,14 +22,14 @@ export async function PUT(req) {
       // return res.status(authResult.status).json(authResult); // Return authentication error
       return authResult;
     }
+
     const createProductSchema = Joi.object({
       name: Joi.string().max(30),
       price: Joi.number(),
-      ratings: Joi.number(),
       Stock: Joi.number().max(9999),
       category: Joi.string(),
       user: Joi.string().regex(mongodbIdPattern).required(),
-      images: Joi.string(),
+      images: Joi.array(),
       description: Joi.string(),
       productId: Joi.string().regex(mongodbIdPattern).required(),
     });
@@ -40,7 +42,6 @@ export async function PUT(req) {
     const {
       name,
       price,
-      ratings,
       Stock,
       category,
       user,
@@ -49,6 +50,7 @@ export async function PUT(req) {
       productId,
     } = requestBody;
     const userExist = await User.findById({ _id: user });
+    let categorySmall = category.toLowerCase();
     if (!userExist) {
       return NextResponse.json(
         { message: "User does not exist" },
@@ -67,43 +69,52 @@ export async function PUT(req) {
       return NextResponse.json({ error: error.message });
     }
 
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+
+    let imagesArray = [];
+    if (typeof images === "string") {
+      imagesArray.push(images);
+    } else {
+      imagesArray = images;
+    }
     if (images) {
-      let previousPhoto = product.images;
+      // Deleting Images From Cloudinary
+      for (let i = 0; i < product.images.length; i++) {
+        await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+      }
+      let imagesLink = [];
 
-      previousPhoto = previousPhoto.split("/").at(-1);
-      // delete the previous photo
-      fs.unlinkSync(`src/storage/${previousPhoto}`);
+      for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+          folder: "products",
+        });
 
-      // read the buffer
-      const buffer = Buffer.from(
-        images.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
-        "base64"
-      );
+        imagesLink.push({
+          public_id: result.public_id,
+          url: result.secure_url,
+        });
+      }
 
-      //give it a name
-      const imagePath = `${Date.now()}-${user}.png`;
-      // save it locally
+      let newProduct;
       try {
-        fs.writeFileSync(`src/storage/${imagePath}`, buffer);
+        product.name = name ? name : product.name;
+        product.price = price ? price : product.price;
+        product.Stock = Stock ? Stock : product.Stock;
+        product.images = images ? imagesLink : product.images; // Assign imagesLink directly
+        product.category = category ? categorySmall : product.category;
+        product.description = description ? description : product.description;
+        await product.save();
       } catch (error) {
         return NextResponse.json({ error: error.message }); // Provide specific error message
       }
-      await Product.updateOne(
-        { _id: productId },
-        {
-          name,
-          price,
-          ratings,
-          Stock,
-          category,
-          description,
-          images: `${process.env.DOMAIN}/storage/${imagePath}`,
-        }
-      );
     } else {
       await Product.updateOne(
         { _id: productId },
-        { name, price, ratings, Stock, category, description }
+        { name, price, Stock, category: categorySmall, description }
       );
     }
     const response = NextResponse.json(

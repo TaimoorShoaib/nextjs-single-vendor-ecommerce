@@ -10,9 +10,65 @@ import {
   } from "@mui/icons-material";
 import Link from "next/link";
   import style from "./user.module.css";
-  
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useRouter } from "next/navigation";
+import { updateUserAdmin } from "../../../../ApiRequest/internalapi";
+import useAutoLogin from "../../../../hooks/useAutoLogin";
+import { useEffect, useState } from "react";
+import Loader from "../../../../components/Loader/loader";
+import Protected from "../../../../components/protected/protected"
   export default function User() {
+    const loading1 = useAutoLogin();
+    const router = useRouter()
+    const dispatch = useDispatch();
+    const params = useParams()
+    const id = params.id
+    //const alert = useAlert();
+  
+    
+    const user =  useSelector(
+      (state) => state.user
+    );
+    const [username, setUsername] = useState();
+    const [email, setEmail] = useState();
+    const [isVerified, setIsVerified] = useState();
+    const [isAdmin, setIsAdmin] = useState();
+  
+    useEffect(() => {
+      setIsVerified(user.isVerified);
+      setIsAdmin(user.isAdmin);
+      setEmail(user?.email)
+      setUsername(user?.username)
+    }, [user]);
+  
+    const updateuserSubmitHandler = (e) => {
+      e.preventDefault();
+      const data ={
+        username:username,
+        email:email,
+        isVerified:isVerified,
+        isAdmin:isAdmin,
+        userId:id,
+        ownerId:user._id,
+       }
+      
+     
+      updateUserAdmin(data)
+      //router.push("/admin/home")
+    };
+ 
+    const handleVerifiedChange = (e) => {
+      setIsVerified(e.target.value === 'true');
+    };
+  
+    const handleAdminChange = (e) => {
+      setIsAdmin(e.target.value === 'true');
+    };
+    console.log(username)
+
     return (
+      <>
+      { loading1 ? <Loader/>:<Protected isAuth={user.auth}>
       <div className={style.user}>
         <div className={style.userTitleContainer}>
           <h1 className={style.userTitle}>Edit User</h1>
@@ -29,33 +85,24 @@ import Link from "next/link";
                 className={style.userShowImg}
               />
               <div className={style.userShowTopTitle}>
-                <span className={style.userShowUsername}>Anna Becker</span>
-                <span className={style.userShowUserTitle}>Software Engineer</span>
+                <span className={style.userShowUsername}>{user.username}</span>
+              
               </div>
             </div>
             <div className={style.userShowBottom}>
               <span className={style.userShowTitle}>Account Details</span>
               <div className={style.userShowInfo}>
                 <PermIdentity className={style.userShowIcon} />
-                <span className={style.userShowInfoTitle}>annabeck99</span>
+                <span className={style.userShowInfoTitle}>{user.username}</span>
               </div>
-              <div className={style.userShowInfo}>
-                <CalendarToday className={style.userShowIcon} />
-                <span className={style.userShowInfoTitle}>10.12.1999</span>
-              </div>
+            
               <span className={style.userShowTitle}>Contact Details</span>
-              <div className={style.userShowInfo}>
-                <PhoneAndroid className={style.userShowIcon} />
-                <span className={style.userShowInfoTitle}>+1 123 456 67</span>
-              </div>
+             
               <div className={style.userShowInfo}>
                 <MailOutline className={style.userShowIcon} />
-                <span className={style.userShowInfoTitle}>annabeck99@gmail.com</span>
+                <span className={style.userShowInfoTitle}>{user.email}</span>
               </div>
-              <div className={style.userShowInfo}>
-                <LocationSearching className={style.userShowIcon} />
-                <span className={style.userShowInfoTitle}>New York | USA</span>
-              </div>
+             
             </div>
           </div>
           <div className={style.userUpdate}>
@@ -66,42 +113,44 @@ import Link from "next/link";
                   <label>Username</label>
                   <input
                     type="text"
-                    placeholder="annabeck99"
+                    placeholder={user.username}
                     className={style.userUpdateInput}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
-                <div className={style.userUpdateItem}>
-                  <label>Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="Anna Becker"
-                    className={style.userUpdateInput}
-                  />
-                </div>
+                
                 <div className={style.userUpdateItem}>
                   <label>Email</label>
                   <input
                     type="text"
-                    placeholder="annabeck99@gmail.com"
+                    placeholder={user.email}
                     className={style.userUpdateInput}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
+
                 <div className={style.userUpdateItem}>
-                  <label>Phone</label>
-                  <input
-                    type="text"
-                    placeholder="+1 123 456 67"
-                    className={style.userUpdateInput}
-                  />
-                </div>
-                <div className={style.userUpdateItem}>
-                  <label>Address</label>
-                  <input
-                    type="text"
-                    placeholder="New York | USA"
-                    className={style.userUpdateInput}
-                  />
-                </div>
+        <label>isVerified</label>
+        <select
+          className={style.userUpdateInput}
+          value={isVerified.toString()}
+          onChange={handleVerifiedChange}
+        >
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+      <div className={style.userUpdateItem}>
+        <label>isAdmin</label>
+        <select
+          className={style.userUpdateInput}
+          value={isAdmin.toString()}
+          onChange={handleAdminChange}
+        >
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
               </div>
               <div className={style.userUpdateRight}>
                 <div className={style.userUpdateUpload}>
@@ -115,11 +164,13 @@ import Link from "next/link";
                   </label>
                   <input type="file" id="file" style={{ display: "none" }} />
                 </div>
-                <button className={style.userUpdateButton}>Update</button>
+                <button className={style.userUpdateButton} onClick={updateuserSubmitHandler}>Update</button>
               </div>
             </form>
           </div>
         </div>
       </div>
+      </Protected>}
+      </>
     );
   }

@@ -25,7 +25,7 @@ export async function POST(req) {
 
     const { id } = requestBody;
 
-    const orders = await Order.find();
+    const orders = await Order.find().populate("user");
 
     const userAdmin = await User.findById({ _id: id });
     if (!userAdmin) {

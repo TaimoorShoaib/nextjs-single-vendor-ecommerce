@@ -66,7 +66,7 @@ export async function POST(req) {
       if (orderStatus === "Delivered") {
         order.deliveredAt = Date.now();
       }
-    } else if (order.orderStatus === "Delivered") {
+    } else if (order.orderStatus === "Shipped") {
       order.orderItems.forEach(async (o) => {
         await updateStockProcessing(o.product, o.quantity);
       });

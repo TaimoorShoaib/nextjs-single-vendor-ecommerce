@@ -1,5 +1,4 @@
 "use client"
-
 import style from  "./sidebar.module.css";
 import {
   LineStyle,
@@ -16,89 +15,63 @@ import {
   Report,
 } from "@mui/icons-material";
 import Link from "next/link";
-export default function Sidebar() {
+import React from "react";
+//import logo from "../../images/logo.png";
+import TreeView from '@mui/lab/TreeView';
+import TreeItem from '@mui/lab/TreeItem';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import AddIcon from "@mui/icons-material/Add";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PeopleIcon from "@mui/icons-material/People";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+
+const Sidebar = () => {
   return (
     <div className={style.sidebar}>
-      <div className={style.sidebarWrapper}>
-        <div className={style.sidebarMenu}>
-          <h3 className={style.sidebarTitle}>Dashboard</h3>
-          <ul className={style.sidebarList}>
-            <Link href="/admin/home" className={style.link}>
-            <li className={`${style.sidebarListItem} ${ style.active}`}>
-              <LineStyle className={style.sidebarIcon} />
-              Home
-            </li>
-            </Link>
-            <li className={style.sidebarListItem}>
-              <Timeline className={style.sidebarIcon} />
-              Analytics
-            </li>
-            <li className={style.sidebarListItem}>
-              <TrendingUp className={style.sidebarIcon} />
-              Sales
-            </li>
-          </ul>
-        </div>
-        <div className={style.sidebarMenu}>
-          <h3 className={style.sidebarTitle}>Quick Menu</h3>
-          <ul className="sidebarList">
-            <Link href="/admin/users" className="link">
-              <li className={style.sidebarListItem}>
-                <PermIdentity className={style.sidebarIcon} />
-                Users
-              </li>
-            </Link>
-            <Link href="/admin/products" className="link">
-              <li className={style.sidebarListItem}>
-                <Storefront className={style.sidebarIcon} />
-                Products
-              </li>
-            </Link>
-            <li className={style.sidebarListItem}>
-              <AttachMoney className={style.sidebarIcon} />
-              Transactions
-            </li>
-            <li className={style.sidebarListItem}>
-              <BarChart className={style.sidebarIcon} />
-              Reports
-            </li>
-          </ul>
-        </div>
-        <div className={style.sidebarMenu}>
-          <h3 className={style.sidebarTitle}>Notifications</h3>
-          <ul className={style.sidebarList}>
-            <li className={style.sidebarListItem}>
-              <MailOutline className={style.sidebarIcon} />
-              Mail
-            </li>
-            <li className={style.sidebarListItem}>
-              <DynamicFeed className={style.sidebarIcon} />
-              Feedback
-            </li>
-            <li className={style.sidebarListItem}>
-              <ChatBubbleOutline className={style.sidebarIcon} />
-              Messages
-            </li>
-          </ul>
-        </div>
-        <div className={style.sidebarMenu}>
-          <h3 className={style.sidebarTitle}>Staff</h3>
-          <ul className={style.sidebarList}>
-            <li className={style.sidebarListItem}>
-              <WorkOutline className={style.sidebarIcon} />
-              Manage
-            </li>
-            <li className={style.sidebarListItem}>
-              <Timeline className={style.sidebarIcon} />
-              Analytics
-            </li>
-            <li className={style.sidebarListItem}>
-              <Report className={style.sidebarIcon} />
-              Reports
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Link href="/">
+        <img src={"logo"} alt="Ecommerce" />
+      </Link>
+      <Link href="/admin/dashboard">
+        <p>
+          <DashboardIcon /> Dashboard
+        </p>
+      </Link>
+      <TreeView
+        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultExpandIcon={<ImportExportIcon />}
+      >
+        <TreeItem nodeId="1" label="Products">
+          <Link href="/admin/products">
+            <TreeItem nodeId="2" label="All" icon={<PostAddIcon />} />
+          </Link>
+
+          <Link href="/admin/product">
+            <TreeItem nodeId="3" label="Create" icon={<AddIcon />} />
+          </Link>
+        </TreeItem>
+      </TreeView>
+      <Link href="/admin/orders">
+        <p>
+          <ListAltIcon />
+          Orders
+        </p>
+      </Link>
+      <Link href="/admin/users">
+        <p>
+          <PeopleIcon /> Users
+        </p>
+      </Link>
+      <Link href="/admin/reviews">
+        <p>
+          <RateReviewIcon />
+          Reviews
+        </p>
+      </Link>
     </div>
   );
-}
+};
+
+export default Sidebar;

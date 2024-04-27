@@ -10,6 +10,7 @@ import { sendEmail } from "../../../../helpers/mailer";
 import Product from "../../../../models/product";
 import fs from "fs";
 import { auth } from "../../../../helpers/auth";
+import cloudinary from "cloudinary";
 
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 const mongodbIdPattern = /^[0-9a-fA-F]{24}$/;
@@ -47,7 +48,20 @@ export async function DELETE(req) {
         { status: 401 }
       );
     }
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
     try {
+      const product = await Product.findById(id);
+      if (!product) {
+        return NextResponse.json({ error: "Product Not found" });
+      }
+
+      for (let i = 0; i < product.images.length; i++) {
+        await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+      }
       await Product.findByIdAndDelete({ _id: id });
     } catch (error) {
       return NextResponse.json({ error: error.message }); // Provide specific error message

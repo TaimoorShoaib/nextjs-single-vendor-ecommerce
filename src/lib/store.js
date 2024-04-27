@@ -4,7 +4,9 @@ import { cartReducer } from "./reducers/cartReducer.js";
 import {
   newProductReducer,
   newReviewReducer,
+  productReducer,
 } from "./reducers/productReducer.js";
+import { orderReducer, orderDetailsReducer } from "./reducers/orderReducer.js";
 let initialState = {
   cartItems: [], // Set default value for cartItems
 };
@@ -28,6 +30,9 @@ export const makeStore = () => {
       cart: cartReducer,
       newReview: newReviewReducer,
       newProduct: newProductReducer,
+      order: orderReducer,
+      orderDetails: orderDetailsReducer,
+      product: productReducer,
     }, // Update reducer key
     preloadedState: { cart: initialState }, // Provide initial state directly
   });
