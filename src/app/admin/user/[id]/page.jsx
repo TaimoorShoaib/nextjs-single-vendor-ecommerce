@@ -17,6 +17,9 @@ import useAutoLogin from "../../../../hooks/useAutoLogin";
 import { useEffect, useState } from "react";
 import Loader from "../../../../components/Loader/loader";
 import Protected from "../../../../components/protected/protected"
+import ProtectedAdmin from "../../../../components/protectedAdmin/protectedAdmin"
+import Topbar from "../../../../components/adminStuff/topbar"
+import Footer from "../../../../components/footer/footer"
   export default function User() {
     const loading1 = useAutoLogin();
     const router = useRouter()
@@ -29,6 +32,7 @@ import Protected from "../../../../components/protected/protected"
     const user =  useSelector(
       (state) => state.user
     );
+    
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
     const [isVerified, setIsVerified] = useState();
@@ -68,7 +72,8 @@ import Protected from "../../../../components/protected/protected"
 
     return (
       <>
-      { loading1 ? <Loader/>:<Protected isAuth={user.auth}>
+      { loading1 ? <Loader/>:<ProtectedAdmin isAdmin={isAdmin}>
+      <Topbar/>
       <div className={style.user}>
         <div className={style.userTitleContainer}>
           <h1 className={style.userTitle}>Edit User</h1>
@@ -170,7 +175,8 @@ import Protected from "../../../../components/protected/protected"
           </div>
         </div>
       </div>
-      </Protected>}
+      <Footer/>
+      </ProtectedAdmin>}
       </>
     );
   }

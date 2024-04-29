@@ -18,6 +18,8 @@ import { useParams } from "next/navigation";
 import Navbar from "../../../../components/adminStuff/topbar/Topbar"
 import Footer from "../../../../components/footer/footer"
 import useAutoLogin from "../../../../hooks/useAutoLogin";
+import ProtectedAdmin from "../../../../components/protectedAdmin/protectedAdmin"
+import Topbar from "../../../../components/adminStuff/topbar/Topbar";
 
 const ProcessOrder = () => {
   const loading1 = useAutoLogin();
@@ -26,6 +28,9 @@ const ProcessOrder = () => {
   const { error: updateError, isUpdated } = useSelector((state) => state.order);
   const ownerId =  useSelector(
     (state) => state.user._id
+  );
+  const isAdmin =  useSelector(
+    (state) => state.user.isAdmin
   );
   const params= useParams()
   const id = params.id
@@ -61,15 +66,17 @@ const ProcessOrder = () => {
 
     dispatch(getOrderDetails(id));
   }, [dispatch,error, id, isUpdated, updateError]);
-
+  if (loading1) {
+    return <Loader />;
+  }
   return (
-    <Fragment>
-      <Navbar/>
+    <ProtectedAdmin isAdmin={isAdmin}>
+     <Topbar/>
       <MetaData title="Process Order" />
       <div className={style.dashboard}>
 
         <div className={style.newProductContainer}>
-          {loading || loading1 ? (
+          {loading ? (
             <Loader />
           ) : (
             <div
@@ -84,7 +91,7 @@ const ProcessOrder = () => {
                   <div className={style.orderDetailsContainerBox}>
                     <div>
                       <p>Name:</p>
-                      <span>{order.user && order.user.username}</span>
+                      <span>{ order.user.username ? order.user.username : "Deleted user" }</span>
                     </div>
                     <div>
                       <p>Phone:</p>
@@ -184,7 +191,7 @@ const ProcessOrder = () => {
         </div>
       </div>
       <Footer/>
-    </Fragment>
+    </ProtectedAdmin>
   );
 };
 

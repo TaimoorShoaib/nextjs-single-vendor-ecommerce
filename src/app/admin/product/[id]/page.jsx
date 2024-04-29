@@ -16,6 +16,10 @@ import useAutoLogin from "../../../../hooks/useAutoLogin";
 import { useRouter } from 'next/navigation';
 import { useParams } from "next/navigation";
 import {GetProduct} from "../../../../ApiRequest/internalapi"
+import ProtectedAdmin from "../../../../components/protectedAdmin/protectedAdmin"
+import Loader from "../../../../components/Loader/loader";
+import Topbar from "../../../../components/adminStuff/topbar"
+import Footer from "../../../../components/footer/footer"
 const UpdateProduct = () => {
   const router = useRouter()
   const dispatch = useDispatch();
@@ -30,6 +34,9 @@ const UpdateProduct = () => {
   const {  error:updateError, isUpdated } = useSelector((state) => state.product);
   const ownerId =  useSelector(
     (state) => state.user._id
+  );
+  const isAdmin =  useSelector(
+    (state) => state.user.isAdmin
   );
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -121,10 +128,13 @@ setOldImages([])
       reader.readAsDataURL(file);
     });
   };
-
+  if( loading){
+    return <Loader/>
+ }
   return (
-    <Fragment>
+    <ProtectedAdmin isAdmin={isAdmin}>
       <MetaData title="Create Product" />
+      <Topbar/>
       <div className={style.dashboard}>
       
         <div className={style.newProductContainer}>
@@ -226,7 +236,8 @@ setOldImages([])
           </form>
         </div>
       </div>
-    </Fragment>
+      <Footer/>
+    </ProtectedAdmin>
   );
 };
 

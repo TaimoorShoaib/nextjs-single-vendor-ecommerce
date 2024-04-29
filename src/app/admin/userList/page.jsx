@@ -10,6 +10,9 @@ import {GetAllUsersAdmin,deleteUserAdmin} from  "../../../ApiRequest/internalapi
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader/loader";
 import useAutoLogin from "../../../hooks/useAutoLogin";
+import ProtectedAdmin from "../../../components/protectedAdmin/protectedAdmin"
+import Topbar from "../../../components/adminStuff/topbar/Topbar";
+import Footer from "../../../components/footer/footer";
 export default function UserList() {
   const loading1 = useAutoLogin();
  const [loading ,setLoading] = useState(false)
@@ -17,7 +20,9 @@ export default function UserList() {
 const ownerId =  useSelector(
   (state) => state.user._id
 );
-
+const isAdmin =  useSelector(
+  (state) => state.user.isAdmin
+);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,7 +102,7 @@ const ownerId =  useSelector(
       width: 150,
       renderCell: (params) => {
         return (
-          <>
+         <>
             <Link href={"/admin/user/" + params.row.id}>
               <button className={style.userListEdit}>Edit</button>
             </Link>
@@ -115,7 +120,8 @@ const ownerId =  useSelector(
   }
 
   return (
-    
+    <ProtectedAdmin isAdmin={isAdmin}>
+      <Topbar/>
     <div className={style.userList}>
       <DataGrid
         rows={data}
@@ -125,6 +131,7 @@ const ownerId =  useSelector(
         checkboxSelection
       />
     </div>
+    </ProtectedAdmin>
   );
 
 }

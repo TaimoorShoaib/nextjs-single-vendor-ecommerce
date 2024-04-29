@@ -8,13 +8,20 @@ import { useEffect, useState } from "react";
 import { GetAllProductAdmin ,deleteProductAdmin } from "../../../ApiRequest/internalapi";
 import useAutoLogin from "../../../hooks/useAutoLogin";
 import Loader from "../../../components/Loader/loader";
+import ProtectedAdmin from "../../../components/protectedAdmin/protectedAdmin"
+
 import { useSelector } from "react-redux";
+import Topbar from "../../../components/adminStuff/topbar/Topbar";
+import Footer from "../../../components/footer/footer";
 export default function ProductList() {
   const [data, setData] = useState([]);
   const loading1 = useAutoLogin();
   const [loading ,setLoading] = useState(false)
   const ownerId =  useSelector(
     (state) => state.user._id
+  );
+  const isAdmin =  useSelector(
+    (state) => state.user.isAdmin
   );
   useEffect(() => {
     const fetchData = async () => {
@@ -136,6 +143,8 @@ export default function ProductList() {
   }
 
   return (
+    <ProtectedAdmin isAdmin={isAdmin}>
+      <Topbar/>
     <div className={style.productList}>
       {data.length > 0 ? (
         <DataGrid
@@ -149,6 +158,7 @@ export default function ProductList() {
         <p>No products found.</p>
       )}
     </div>
+    </ProtectedAdmin>
   );
 
 }

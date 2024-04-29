@@ -36,7 +36,7 @@ export default function Navbar() {
           Profile
         </Link>
         {isAdmin && (
-          <Link className={style.ahead} href="/user/profile/myProfile">
+          <Link className={style.ahead} href="/admin/home">
             DashBoard
           </Link>
         )}

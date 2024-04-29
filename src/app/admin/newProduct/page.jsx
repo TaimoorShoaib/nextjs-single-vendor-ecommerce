@@ -14,6 +14,10 @@ import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import useAutoLogin from "../../../hooks/useAutoLogin";
 import { useRouter } from 'next/navigation';
+import ProtectedAdmin from "../../../components/protectedAdmin/protectedAdmin"
+import Loader from "../../../components/Loader/loader";
+import Topbar from "../../../components/adminStuff/topbar/Topbar";
+import Footer from "../../../components/footer/footer";
 
 const NewProduct = () => {
   const router = useRouter()
@@ -25,6 +29,9 @@ const NewProduct = () => {
   const {  error, success } = useSelector((state) => state.newProduct);
   const ownerId =  useSelector(
     (state) => state.user._id
+  );
+  const isAdmin =  useSelector(
+    (state) => state.user.isAdmin
   );
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -94,10 +101,13 @@ const NewProduct = () => {
       reader.readAsDataURL(file);
     });
   };
-
+  if (loading) {
+    return <Loader/>;
+  }
   return (
-    <Fragment>
+    <ProtectedAdmin isAdmin={isAdmin}>
       <MetaData title="Create Product" />
+      <Topbar/>
       <div className={style.dashboard}>
       
         <div className={style.newProductContainer}>
@@ -193,7 +203,8 @@ const NewProduct = () => {
           </form>
         </div>
       </div>
-    </Fragment>
+      <Footer/>
+    </ProtectedAdmin>
   );
 };
 

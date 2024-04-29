@@ -10,6 +10,10 @@ import {getAllOrder,deleteOrder} from  "../../../ApiRequest/internalapi"
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader/loader";
 import useAutoLogin from "../../../hooks/useAutoLogin";
+import ProtectedAdmin from "../../../components/protectedAdmin/protectedAdmin"
+import Topbar from "../../../components/adminStuff/topbar/Topbar";
+import Footer from "../../../components/footer/footer";
+
 export default function UserList() {
   const loading1 = useAutoLogin();
  const [loading ,setLoading] = useState(false)
@@ -17,11 +21,16 @@ export default function UserList() {
  const ownerId =  useSelector(
   (state) => state.user._id
 );
+const isAdmin =  useSelector(
+  (state) => state.user.isAdmin
+);
 console.log(data)
 useEffect(() => {
   const fetchData = async () => {
     try {
+      
       const response = await getAllOrder(ownerId);
+      
       if (response.status === 200) {
         // Assuming the response contains an array of orders
         const ordersWithId = response.data.Order.map((order, index) => ({
@@ -29,6 +38,7 @@ useEffect(() => {
           id: index + 1, // Assuming index is not suitable as an id
         }));
         setData(ordersWithId);
+       
       } else {
         console.log("Failed to fetch orders:", response);
       }
@@ -36,25 +46,28 @@ useEffect(() => {
       console.error("Error fetching orders:", error);
       // Handle error here, e.g., set error state
     }
+      
+    
   };
 
   fetchData(); // Call fetchData function immediately
 
   // Add ownerId to the dependency array to trigger useEffect on ownerId change
-}, [ownerId]); // Add ownerId to the dependency array
+}, [data, ownerId]); // Add ownerId to the dependency array
    
   const handleDelete = async (id) => {
     const newData = data.filter((item) => item.id !== id); // Declare data before usage
     setData(newData);
+    setLoading(true)
     const requestData = {
       orderId: id,
       userId: ownerId,
     };
-    setLoading(true);
+    
     try {
       const response = await deleteOrder(requestData);
       if (response.status === 200) {
-        setLoading(false);
+       setLoading(false)
       } else {
         console.log(response);
       }
@@ -74,8 +87,7 @@ useEffect(() => {
       renderCell: (params) => {
         return (
           <div className={style.userListUser}>
-            
-            {params.row.user.username}
+            {params.row.user ? params.row.user.username : 'Deleted user'}
           </div>
         );
       },
@@ -87,8 +99,7 @@ useEffect(() => {
       renderCell: (params) => {
         return (
           <div className={style.userListUser}>
-            
-            {params.row.user.email}
+            {params.row.user ? params.row.user.email : 'Deleted user'}
           </div>
         );
       },
@@ -137,8 +148,9 @@ useEffect(() => {
  }
 
   return (
-    
+    //<ProtectedAdmin isAdmin={isAdmin}>
     <div className={style.userList}>
+      <Topbar/>
       <DataGrid
         rows={data}
         disableSelectionOnClick
@@ -146,7 +158,9 @@ useEffect(() => {
         pageSize={8}
         checkboxSelection
       />
+      
     </div>
+    //</ProtectedAdmin>
   );
 
 }
