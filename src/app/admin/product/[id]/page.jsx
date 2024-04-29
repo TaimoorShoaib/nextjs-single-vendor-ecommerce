@@ -18,7 +18,7 @@ import { useParams } from "next/navigation";
 import {GetProduct} from "../../../../ApiRequest/internalapi"
 import ProtectedAdmin from "../../../../components/protectedAdmin/protectedAdmin"
 import Loader from "../../../../components/Loader/loader";
-import Topbar from "../../../../components/adminStuff/topbar"
+import Topbar from "../../../../components/adminStuff/topbar/Topbar"
 import Footer from "../../../../components/footer/footer"
 const UpdateProduct = () => {
   const router = useRouter()

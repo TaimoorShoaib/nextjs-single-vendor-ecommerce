@@ -110,8 +110,12 @@ const Dashboard = () => {
         },
       ],
     };
+    if(loading||loading1){
+       return <Loader/>
+    }
   return (
     <div className="dashboard">
+      <ProtectedAdmin isAdmin={isAdmin} >
       <MetaData title="Dashboard - Admin Panel" />
     <Topbar/>
       <div className={style.dashboardContainer}>
@@ -148,6 +152,7 @@ const Dashboard = () => {
         </div>
       </div>
       <Footer/>
+      </ProtectedAdmin>
     </div>
    
   );
