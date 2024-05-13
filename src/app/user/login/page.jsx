@@ -41,8 +41,11 @@ setLoader(true)
         isAdmin:response.data.user.isAdmin,
         isVerified:response.data.user.isVerified
       };
-
-      dispatch(setUser(user));
+if(user.isVerified === false){
+  
+  return router.push("/user/checkYourEmail");
+}
+dispatch(setUser(user));
       setLoader(false)
       // Redirect to home page
       router.push("/");

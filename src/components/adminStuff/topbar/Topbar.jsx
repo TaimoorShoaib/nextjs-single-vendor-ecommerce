@@ -1,41 +1,84 @@
+"use client"
 import React from "react";
 import style from "./topbar.module.css";
-import { NotificationsNone, Language, Settings } from "@mui/icons-material";
 import Link from "next/link";
+import { resetUser } from "../../../lib/userSlice";
+import { signout } from "../../../ApiRequest/internalapi";
+import { useDispatch, useSelector } from "react-redux";
 export default function Topbar() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const isAuthenticated = user.auth;
+  const isAdmin = user.isAdmin;
+
+  const handleSignout = async () => {
+    await signout();
+    dispatch(resetUser());
+  };
   return (
     <div className={style.topbar}>
       <div className={style.topbarWrapper}>
         <div className={style.topLeft}>
-          <Link   href={"/admin/home"} className={style.logo}>lamaadmin</Link>
+          <Link href={"/"} className={style.logo}>
+            lamaadmin
+          </Link>
         </div>
         <div className={style.topLeft}>
-          <Link href={"/admin/orderList"} className={style.page}>orders</Link>
+          <Link href={"/admin/home"} className={style.page}>
+            Home
+          </Link>
         </div>
         <div className={style.topLeft}>
-          <Link href={"/admin/userList"}  className={style.page}>UserList</Link>
+          <Link href={"/admin/orderList"} className={style.page}>
+            Orders
+          </Link>
         </div>
         <div className={style.topLeft}>
-          <Link href={"/admin/productList"}  className={style.page}>ProductList</Link>
+          <Link href={"/admin/userList"} className={style.page}>
+            UserList
+          </Link>
         </div>
         <div className={style.topLeft}>
-          <Link href={"/admin/newProduct"}  className={style.page}>CreateProduct</Link>
+          <Link href={"/admin/productList"} className={style.page}>
+            ProductList
+          </Link>
         </div>
-       
-        <div className={style.topRight}>
-          <div className={style.topbarIconContainer}>
-            <NotificationsNone />
-            <span className={style.topIconBadge}>2</span>
+        <div className={style.topLeft}>
+          <Link href={"/admin/newProduct"} className={style.page}>
+            CreateProduct
+          </Link>
+        </div>
+        <div className={style.topLeft}>
+          <Link href={"/"} className={style.page}>
+            Store
+          </Link>
+        </div>
+        {isAuthenticated ? (
+          <div>
+            <button className={style.signOutButton} onClick={handleSignout}>
+              Sign out
+            </button>
           </div>
-          <div className={style.topbarIconContainer}>
-            <Language />
-            <span className={style.topIconBadge}>2</span>
+        ) : (
+          <div>
+            <Link
+              className={({ isActive }) =>
+                isActive ? style.activeStyle : style.inActiveStyle
+              }
+              href="/user/login"
+            >
+              <button className={style.logInButton}>Log In</button>
+            </Link>
+            <Link
+              className={({ isActive }) =>
+                isActive ? style.activeStyle : style.inActiveStyle
+              }
+              href="/user/signup"
+            >
+              <button className={style.signUpButton}>Sign Up</button>
+            </Link>
           </div>
-          <div className={style.topbarIconContainer}>
-            <Settings />
-          </div>
-          <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className={style.topAvatar} />
-        </div>
+        )}
       </div>
     </div>
   );

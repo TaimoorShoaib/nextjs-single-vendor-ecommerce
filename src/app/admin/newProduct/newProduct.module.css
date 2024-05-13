@@ -55,7 +55,12 @@
   display: flex;
   padding: 0%;
 }
-
+.errorMessage{
+  color: red;
+  margin: 20px 0;
+  font-size: 20px;
+  font-weight: bold;
+}
 .createProductFormFile > input::file-selector-button {
   cursor: pointer;
   width: 100%;

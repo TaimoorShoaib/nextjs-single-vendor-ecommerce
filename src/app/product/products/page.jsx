@@ -14,6 +14,7 @@ import { useParams } from "next/navigation";
 import Slider from "@mui/material/Slider";
 import Navbar from "../../../components/navbar/navbar";
 import Footer from "../../../components/footer/footer";
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 
 const  Products  =  () => { 
@@ -182,6 +183,12 @@ useEffect(() => {
                   />
                 </div>
               )}
+
+              {products.length ===0 && <div className={style.emptyCart}>
+            <RemoveShoppingCartIcon />
+            <h3>No Product in Your Cart</h3>
+            
+          </div> }
             </>
             <Footer/>
               </Protected>

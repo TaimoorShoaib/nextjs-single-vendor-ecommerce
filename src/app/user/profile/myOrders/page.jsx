@@ -11,6 +11,8 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import { getLogInUserOrder } from "../../../../ApiRequest/internalapi";
 import useAutoLogin from "../../../../hooks/useAutoLogin";
 import Protected from "../../../../components/protected/protected";
+import Footer from "../../../../components/footer/footer";
+import Navbar from "../../../../components/navbar/navbar"
 const MyOrders = () => {
 
   const loading = useAutoLogin();
@@ -94,6 +96,7 @@ const columns = [
         <Loader />
       ) : ( 
         <Protected isAuth={isAuth}>
+          <Navbar/>
         <div className={style.myOrdersPage}>
           <DataGrid
             rows={rows}
@@ -106,8 +109,10 @@ const columns = [
 
           <Typography id="myOrdersHeading">{user.username}s Orders</Typography>
         </div>
+        <Footer/>
         </Protected>
       )}
+     
     </Fragment>
   );
 };

@@ -29,6 +29,15 @@
   border: none;
   border-top: 1px solid #ddd; /* Color of the horizontal line */
 }
+.redColor {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: red;
+}
+
+.greenColor {
+  color: green;
+}
 .AddToCartButton {
   background-color: #ffa41c;
   color: #fff;

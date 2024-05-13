@@ -156,13 +156,13 @@ const ProductDetails = ({ params }) => {
                 </button>
                 <hr />
                 <div className={style.ProductStatus}>
-                  <p>
-                    Status:{" "}
-                    <b className={product.Stock < 1 ? "redColor" : "greenColor"}>
-                      {product.Stock < 1 ? "Out of Stock" : "In Stock"}
-                    </b>
-                  </p>
-                </div>
+  <p>
+    Status:{" "}
+    <b className={product.Stock < 1 ? style.redColor : style.greenColor}>
+      {product.Stock < 1 ? "Out of Stock" : "In Stock"}
+    </b>
+  </p>
+</div>
                 <hr />
                 <div className={style.ProductDescription}>
                   <h3>Description:</h3>

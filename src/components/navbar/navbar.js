@@ -1,19 +1,24 @@
 "use client";
 import style from "./Navbar.module.css";
-import { useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../../lib/userSlice";
 import { signout } from "../../ApiRequest/internalapi";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+
 export default function Navbar() {
-  let dispatch = useDispatch();
-  let user = useSelector((state) => state.user);
-  let isAuthenticated = user.auth;
-  let isAdmin = user.isAdmin;
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
+  const isAuthenticated = user.auth;
+  const isAdmin = user.isAdmin;
+  const [dashBoard, setDashboard] = useState(false);
   const handleSignout = async () => {
     await signout();
-
     dispatch(resetUser());
   };
+
   return (
     <>
       <nav className={`${style.navbar}`}>
@@ -26,20 +31,28 @@ export default function Navbar() {
         <Link className={style.ahead} href="/product/products">
           Products
         </Link>
-        <Link className={style.ahead} href="/cart">
-          Cart
-        </Link>
         <Link className={style.ahead} href="/search">
           search
         </Link>
         <Link className={style.ahead} href="/user/profile/myProfile">
           Profile
         </Link>
+
         {isAdmin && (
           <Link className={style.ahead} href="/admin/home">
             DashBoard
           </Link>
         )}
+        <div className={style.cartContainer}>
+          <Link className={style.ahead} href="/cart">
+            <div className={style.cartIconWrapper}>
+              <ShoppingCartIcon />
+              {cartItems.length > 0 && (
+                <div className={style.cartItemCount}>{cartItems.length}</div>
+              )}
+            </div>
+          </Link>
+        </div>
         {isAuthenticated ? (
           <div>
             <button className={style.signOutButton} onClick={handleSignout}>

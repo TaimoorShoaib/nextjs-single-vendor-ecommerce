@@ -40,6 +40,7 @@ const NewProduct = () => {
   const [Stock, setStock] = useState(0);
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
+  const [errorInput , setErrorInput]= useState("")
   console.log(imagesPreview)
   const categories = [
     "Laptop",
@@ -66,20 +67,29 @@ const NewProduct = () => {
 
   const createProductSubmitHandler = (e) => {
     e.preventDefault();
-
+ if(name && price&& description&& category&&Stock&&images){ 
     const myForm = new FormData();
-
+  
     myForm.set("name", name);
     myForm.set("price", price);
     myForm.set("description", description);
     myForm.set("category", category);
     myForm.set("Stock", Stock);
     myForm.set("user", ownerId);
-    images.forEach((image) => {
-      myForm.append("images", image);
+ 
+  
+    // Append each image separately to FormData
+    if(images.length > 1){
+    images.forEach((image, index) => {
+      myForm.append(`images[${index}]`, image);
     });
+    }else{
+      setErrorInput("Add more then one image") 
+    }
     dispatch(createProduct(myForm));
-    //router.push("/admin/home")
+  }else{
+    setErrorInput("Please enter a value in all the fields")
+  }
   };
 
   const createProductImagesChange = (e) => {
@@ -200,7 +210,9 @@ const NewProduct = () => {
             >
               Create
             </Button>
+            {errorInput != "" ? <p className={style.errorMessage}>{errorInput}</p> : ""}
           </form>
+          
         </div>
       </div>
       <Footer/>

@@ -39,26 +39,23 @@ const Dashboard = () => {
     const isAdmin =  useSelector(
       (state) => state.user.isAdmin
     );
-     useEffect(() => {
-      (async function GetDashboardApi() {
-        const response = await getAllOrder(ownerId);
-        if (response.status === 200) {
-          setOrders(response.data.Order);
-          setLoading(false);
-        }
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true); // set loading to true before API calls
+        const response1 = await getAllOrder(ownerId);
+        if (response1.status === 200) setOrders(response1.data.Order);
+  
         const response2 = await GetAllProductAdmin();
-        if (response2.status === 200) {
-          setProducts(response2.data.Products);
-          setLoading(false);
-        }
+        if (response2.status === 200) setProducts(response2.data.Products);
+  
         const response3 = await GetAllUsersAdmin();
-        if (response3.status === 200) {
-          setUsers(response3.data.Users);
-          setLoading(false);
-        }
-      })();
-      
-    }, [products,orders,users]);
+        if (response3.status === 200) setUsers(response3.data.Users);
+  
+        setLoading(false); // set loading to false after fetching data
+      };
+  
+      fetchData();
+    }, [ownerId]); // fetch data when ownerId changes
 
   let outOfStock = 0;
 

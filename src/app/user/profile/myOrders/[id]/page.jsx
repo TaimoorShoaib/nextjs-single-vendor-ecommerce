@@ -12,6 +12,8 @@ import { useParams } from "next/navigation";
 import useAutoLogin from "../../../../../hooks/useAutoLogin";
 import Protected from "../../../../../components/protected/protected"
 import { getLogInUserOrderDetail } from "../../../../../ApiRequest/internalapi";
+import Navbar from "../../../../../components/navbar/navbar";
+import Footer from "../../../../../components/footer/footer";
 const OrderDetails = () => {
   const loading = useAutoLogin();
 
@@ -34,6 +36,7 @@ const id = params.id
       ) : (
         <Protected isAuth={isAuth}>
           <MetaData title="Order Details" />
+          <Navbar/>
           <div className={style.orderDetailsPage}>
             <div className={style.orderDetailsContainer}>
               <Typography className={style.orderDetailsContainerh1} component="h1">
@@ -103,6 +106,7 @@ const id = params.id
               </div>
             </div>
           </div>
+          <Footer/>
         </Protected>
       )}
     </Fragment>

@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import useAutoLogin from "../../../../hooks/useAutoLogin";
 import Loader from "../../../../components/Loader/loader";
 import Protected from "../../../../components/protected/protected";
+import Link from "next/link";
 const UpdateProfile = () => {
 
   const  user  = useSelector(
@@ -86,7 +87,9 @@ setLoader(true)
       </button>
       
       {error != "" ? <p className={style.errorMessage}>{error}</p> : ""}
+      <p>Dont want to update ? <Link href={"/user/profile/myProfile"}>My Profile</Link></p>
     </div>
+    
     </div>
     </div>
     </Protected>

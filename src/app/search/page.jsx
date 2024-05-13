@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation';
 import useAutoLogin from "../../hooks/useAutoLogin";
 import Protected from "../../components/protected/protected";
 import Loader from "../../components/Loader/loader.jsx";
+import Navbar from "../../components/navbar/navbar";
+import Footer from "../../components/footer/footer";
 
 const Search = () => {
   const router = useRouter();
@@ -31,7 +33,7 @@ const Search = () => {
   return (
     <Protected isAuth={isAuth}>
       
-      
+      <Navbar/>
     <Fragment>
       <MetaData title="Search A Product -- ECOMMERCE" />
       <form className={style.searchBox} onSubmit={searchSubmitHandler}>
@@ -43,10 +45,12 @@ const Search = () => {
         />
         <input  className={style.searchBoxinputsubmit} type="submit" value="Search" />
       </form>
-    </Fragment>
-
     
+    </Fragment>
+    <Footer/>
+  
     </Protected>
+    
   )
 };
 

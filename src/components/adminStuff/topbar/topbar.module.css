@@ -59,3 +59,74 @@
     text-decoration: none;
     
   }
+
+  .activeStyle {
+    color: #3861fb;
+    font-size: 22px;
+    font-weight: bold;
+    justify-content: space-around;
+  }
+  
+  .inActiveStyle {
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .logInButton {
+    border: none;
+    outline: none;
+    border: 2px;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: large;
+    text-decoration: none;
+  }
+  
+  .signUpButton {
+    margin-left: 10px;
+    background-color: #3861fb;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: large;
+  }
+  
+  .signOutButton {
+    margin-left: 10px;
+    background-color: #ea3943;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: large;
+  }
+  
+  .logInButton:hover {
+    color: black;
+    background-color: #f3f3f3;
+  }
+  
+  .signUpButton:hover {
+    background-color: #1f4ffd;
+  }
+  
+  .signOutButton:hover {
+    background-color: #e01822;
+  }
+  
+  .saparator {
+    height: 1px;
+    margin: 5px;
+    background: linear-gradient(to right, transparent, #9ba3c2, transparent);
+  }
+  

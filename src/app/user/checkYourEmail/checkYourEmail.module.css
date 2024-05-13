@@ -1,0 +1,30 @@
+.loginWrapper3 {
+    
+    max-width: 400px;
+    margin: 30vh auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  .span {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .span:hover {
+    text-decoration: none;
+  }

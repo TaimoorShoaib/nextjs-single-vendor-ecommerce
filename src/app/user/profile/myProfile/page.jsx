@@ -7,6 +7,8 @@ import Link from "next/link";
 import style from "./myProfile.module.css";
 import useAutoLogin from "../../../../hooks/useAutoLogin";
 import Protected from "../../../../components/protected/protected";
+import Navbar from "../../../../components/navbar/navbar";
+import Footer from "../../../../components/footer/footer";
 const Profile = () => {
     const loading1 = useAutoLogin();
        const user = useSelector((state) => state.user);
@@ -21,6 +23,7 @@ const Profile = () => {
       ) : (
         <Protected isAuth={isAuth}>
           <MetaData title={`${user.name}'s Profile`} />
+          <Navbar/>
           <div className={style.profileContainer}>
             <div>
               <h1>My Profile</h1>
@@ -43,6 +46,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          <Footer/>
         </Protected>
       )}
     </Fragment>

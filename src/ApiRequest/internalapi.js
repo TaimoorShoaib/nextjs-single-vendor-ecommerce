@@ -17,6 +17,16 @@ export const login = async (data) => {
   }
   return response;
 };
+export const verifyEmailCart = async (id) => {
+  let response;
+
+  try {
+    response = await api.post("/api/users/verifyEmailCart", { id });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
 export const signup = async (data) => {
   let response;
 

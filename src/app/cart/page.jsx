@@ -12,12 +12,14 @@ import Loader from "../../components/Loader/loader";
 import MetaData from "../../components/MetaData/metaData";
 import Navbar from "../../components/navbar/navbar";
 import { useRouter } from 'next/navigation';
-
+import { verifyEmailCart } from "../../ApiRequest/internalapi";
 const Cart = () => {
   const loading1 = useAutoLogin();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const isAuth = useSelector((state) => state.user.auth);
+  const isVerified = useSelector((state) => state.user.isVerified);
+  const userId = useSelector((state) => state.user._id);
     const router = useRouter()
   const increaseQuantity = (id, quantity, stock) => {
     const newQty = quantity + 1;
@@ -41,7 +43,11 @@ const Cart = () => {
     dispatch(removeItemsFromCart(id));
   };
 
-  const checkoutHandler = () => {
+  const checkoutHandler = async () => {
+    if(isVerified === false){
+         await verifyEmailCart(userId)
+       return  router.push("/user/checkYourEmail");
+    }
     router.push("/order/shipping");
     console.log("checkoutHandler")
   };

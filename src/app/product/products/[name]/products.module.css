@@ -1,3 +1,31 @@
+
+.emptyCart {
+  margin-top: -20vh;
+  text-align: center;
+  padding-bottom: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+
+}
+.emptyCart > svg {
+  font-size: 5vmax;
+  color: tomato;
+}
+.emptyCart > p {
+  font-size: 2vmax;
+}
+.emptyCarta {
+  background-color: rgb(51, 51, 51);
+  color: white;
+  border: none;
+  padding: 1vmax 3vmax;
+  cursor: pointer;
+  font: 400 1vmax "Roboto";
+  text-decoration: none;
+}
 .productsHeading {
     margin: 2vmax auto;
     width: 15vw;
