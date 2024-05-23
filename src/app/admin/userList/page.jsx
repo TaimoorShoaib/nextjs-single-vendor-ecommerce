@@ -16,7 +16,7 @@ import Footer from "../../../components/footer/footer";
 export default function UserList() {
   const loading1 = useAutoLogin();
  const [loading ,setLoading] = useState(false)
-  const [data, setData] = useState(userRows);
+  const [data, setData] = useState([]);
 const ownerId =  useSelector(
   (state) => state.user._id
 );

@@ -27,6 +27,16 @@ export const verifyEmailCart = async (id) => {
   }
   return response;
 };
+export const getUserById = async (id) => {
+  let response;
+
+  try {
+    response = await api.post("/api/users/getuserById", { id });
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
 export const signup = async (data) => {
   let response;
 

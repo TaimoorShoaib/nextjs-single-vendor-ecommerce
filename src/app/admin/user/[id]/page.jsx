@@ -20,6 +20,7 @@ import Protected from "../../../../components/protected/protected"
 import ProtectedAdmin from "../../../../components/protectedAdmin/protectedAdmin"
 import Topbar from "../../../../components/adminStuff/topbar/Topbar"
 import Footer from "../../../../components/footer/footer"
+import { getUserById } from "../../../../ApiRequest/internalapi";
   export default function User() {
     const loading1 = useAutoLogin();
     const router = useRouter()
@@ -29,22 +30,34 @@ import Footer from "../../../../components/footer/footer"
     //const alert = useAlert();
   
     
-    const user =  useSelector(
-      (state) => state.user
+    const isAdmin2 =  useSelector(
+      (state) => state.user.isAdmin
     );
     
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
     const [isVerified, setIsVerified] = useState();
     const [isAdmin, setIsAdmin] = useState();
-  
+    const [userDetail, setUserDetail] = useState();
+
+
     useEffect(() => {
-      setIsVerified(user.isVerified);
-      setIsAdmin(user.isAdmin);
-      setEmail(user?.email)
-      setUsername(user?.username)
-    }, [user]);
-  
+      (async function getBlogDetail() {
+          const response = await getUserById(id);
+          if (response.status === 200) {
+              setUserDetail(response.data.user);
+          }
+      })();
+  }, [id]);
+
+  useEffect(() => {
+      if (userDetail) {
+          setIsVerified(userDetail.isVerified);
+          setIsAdmin(userDetail.isAdmin);
+          setEmail(userDetail.email);
+          setUsername(userDetail.username);
+      }
+  }, [userDetail]);
     const updateuserSubmitHandler = (e) => {
       e.preventDefault();
       const data ={
@@ -72,7 +85,7 @@ import Footer from "../../../../components/footer/footer"
 
     return (
       <>
-      { loading1 ? <Loader/>:<ProtectedAdmin isAdmin={isAdmin}>
+      { loading1 ? <Loader/>:<ProtectedAdmin isAdmin={isAdmin2}>
       <Topbar/>
       <div className={style.user}>
         <div className={style.userTitleContainer}>
@@ -90,7 +103,7 @@ import Footer from "../../../../components/footer/footer"
                 className={style.userShowImg}
               />
               <div className={style.userShowTopTitle}>
-                <span className={style.userShowUsername}>{user.username}</span>
+                <span className={style.userShowUsername}>{username}</span>
               
               </div>
             </div>
@@ -98,14 +111,14 @@ import Footer from "../../../../components/footer/footer"
               <span className={style.userShowTitle}>Account Details</span>
               <div className={style.userShowInfo}>
                 <PermIdentity className={style.userShowIcon} />
-                <span className={style.userShowInfoTitle}>{user.username}</span>
+                <span className={style.userShowInfoTitle}>{username}</span>
               </div>
             
               <span className={style.userShowTitle}>Contact Details</span>
              
               <div className={style.userShowInfo}>
                 <MailOutline className={style.userShowIcon} />
-                <span className={style.userShowInfoTitle}>{user.email}</span>
+                <span className={style.userShowInfoTitle}>{email}</span>
               </div>
              
             </div>
@@ -118,7 +131,7 @@ import Footer from "../../../../components/footer/footer"
                   <label>Username</label>
                   <input
                     type="text"
-                    placeholder={user.username}
+                    placeholder={username}
                     className={style.userUpdateInput}
                     onChange={(e) => setUsername(e.target.value)}
                   />
@@ -128,7 +141,7 @@ import Footer from "../../../../components/footer/footer"
                   <label>Email</label>
                   <input
                     type="text"
-                    placeholder={user.email}
+                    placeholder={email}
                     className={style.userUpdateInput}
                     onChange={(e) => setEmail(e.target.value)}
                   />
