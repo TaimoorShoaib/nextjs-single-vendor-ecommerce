@@ -33,7 +33,9 @@ import { getUserById } from "../../../../ApiRequest/internalapi";
     const isAdmin2 =  useSelector(
       (state) => state.user.isAdmin
     );
-    
+    const _id =  useSelector(
+      (state) => state.user._id
+    );
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
     const [isVerified, setIsVerified] = useState();
@@ -66,7 +68,7 @@ import { getUserById } from "../../../../ApiRequest/internalapi";
         isVerified:isVerified,
         isAdmin:isAdmin,
         userId:id,
-        ownerId:user._id,
+        ownerId:_id,
        }
       
      
