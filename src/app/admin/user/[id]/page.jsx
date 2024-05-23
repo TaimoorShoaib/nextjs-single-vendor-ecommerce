@@ -65,7 +65,7 @@ export default function User() {
       ownerId: _id,
     };
     updateUserAdmin(data);
-    // router.push("/admin/home");
+    router.push("/admin/userList");
   };
 
   const handleVerifiedChange = (e) => {
