@@ -25,7 +25,7 @@ export default function ProductCard({ product }) {
         onMouseLeave={() => setHovered(false)}
       >
         <img
-          className={styles.productImage}
+          className={styles.productCardimg}
           src={hovered ? product.images[1].url : product.images[0].url}
           alt={product.name} // Don't forget to add alt text for accessibility
         />

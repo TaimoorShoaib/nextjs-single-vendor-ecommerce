@@ -186,7 +186,7 @@ useEffect(() => {
 
               {products.length ===0 && <div className={style.emptyCart}>
             <RemoveShoppingCartIcon />
-            <h3>No Product in Your Cart</h3>
+            <h3>No Product Found</h3>
             
           </div> }
             </>

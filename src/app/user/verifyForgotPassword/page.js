@@ -62,62 +62,66 @@ const VerifyForgotPassword = () => {
   ) : (
     <PublicStopAuth isAuth={isAuth}>
       <div className={style.loginPageBackground}>
-        <div className={style.loginWrapper}>
-          <hr />
-          <div className={style.loginHeader}>
-            {loading ? "Processing" : "forgot password"}
-          </div>
-          <hr />
-          <div className={style.emailContainer}>
-            <LockOutlinedIcon className={style.lockIcon} />
-            <TextInput
-              type="password"
-              value={values.password}
-              name="password"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              placeholder="Enter your password"
-            />
-          </div>
-          {errors.password && touched.password && (
-            <p className={style.errorMessageTouch}>{errors.password}</p>
-          )}
-          <div className={style.emailContainer}>
-            <LockOutlinedIcon className={style.lockIcon} />
-            <TextInput
-              type="password"
-              value={values.confirmPassword}
-              name="confirmPassword"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              placeholder="Confirm Password"
-            />
-          </div>
-          {errors.confirmPassword && touched.confirmPassword && (
-            <p className={style.errorMessageTouch}>{errors.confirmPassword}</p>
-          )}
-          <button
-            className={style.loginbutton}
-            onClick={Submit}
-            disabled={
-              !values.confirmPassword ||
-              errors.confirmPassword ||
-              !values.password ||
-              errors.password
-            }
-          >
-            Submit
-          </button>
-          <span>
-            Dont have a account ?{" "}
+        <div className={style.leftSideImage}>
+          <div className={style.loginWrapper}>
+            <hr />
+            <div className={style.loginHeader}>
+              {loading ? "Processing" : "forgot password"}
+            </div>
+            <hr />
+            <div className={style.emailContainer}>
+              <LockOutlinedIcon className={style.lockIcon} />
+              <TextInput
+                type="password"
+                value={values.password}
+                name="password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Enter your password"
+              />
+            </div>
+            {errors.password && touched.password && (
+              <p className={style.errorMessageTouch}>{errors.password}</p>
+            )}
+            <div className={style.emailContainer}>
+              <LockOutlinedIcon className={style.lockIcon} />
+              <TextInput
+                type="password"
+                value={values.confirmPassword}
+                name="confirmPassword"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Confirm Password"
+              />
+            </div>
+            {errors.confirmPassword && touched.confirmPassword && (
+              <p className={style.errorMessageTouch}>
+                {errors.confirmPassword}
+              </p>
+            )}
             <button
-              className={style.createAccount}
-              onClick={() => router.push("/user/signup")}
+              className={style.loginbutton}
+              onClick={Submit}
+              disabled={
+                !values.confirmPassword ||
+                errors.confirmPassword ||
+                !values.password ||
+                errors.password
+              }
             >
-              Register
+              Submit
             </button>
-          </span>
-          {error != "" ? <p className={style.errorMessage}>{error}</p> : ""}
+            <span>
+              Dont have a account ?{" "}
+              <button
+                className={style.createAccount}
+                onClick={() => router.push("/user/signup")}
+              >
+                Register
+              </button>
+            </span>
+            {error != "" ? <p className={style.errorMessage}>{error}</p> : ""}
+          </div>
         </div>
       </div>
     </PublicStopAuth>
