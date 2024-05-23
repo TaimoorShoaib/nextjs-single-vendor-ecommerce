@@ -58,6 +58,11 @@
 }
 
 @media screen and (max-width: 667px) {
+  
+  .productCard  {
+    margin-bottom: 4vmax;
+   
+  }
   .productCard > p {
     font-size: 1.7vmax;
   }
