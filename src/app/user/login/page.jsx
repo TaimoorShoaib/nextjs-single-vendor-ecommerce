@@ -49,9 +49,10 @@ dispatch(setUser(user));
       setLoader(false)
       // Redirect to home page
       router.push("/");
-    } else if (response.code === "ERR_BAD_REQUEST") {
+    } else if (response.response.status === 401) {
       setLoader(false)
-      setError(response.response.data.message);
+      setError("email or password is wrong");
+      console.log(response.response.data.message+"aaaaaaaaaaaaaa")
     }
   };
 
