@@ -65,7 +65,7 @@ export default function User() {
       ownerId: _id,
     };
     updateUserAdmin(data);
-    router.push("/admin/userList");
+    router.push("/admin/home");
   };
 
   const handleVerifiedChange = (e) => {
@@ -86,9 +86,9 @@ export default function User() {
           <div className={style.user}>
             <div className={style.userTitleContainer}>
               <h1 className={style.userTitle}>Edit User</h1>
-              <Link href="/newUser">
-                <button className={style.userAddButton}>Create</button>
-              </Link>
+              <p >
+                <button className={style.userAddButton}>Avtive</button>
+              </p>
             </div>
             <div className={style.userContainer}>
               <div className={style.userShow}>
