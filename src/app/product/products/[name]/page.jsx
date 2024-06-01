@@ -25,7 +25,8 @@ const  Products  =  ({ params }) => {
   const [ratings, setRatings] = useState(0);
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState([]);
-
+  const [maxPrice ,setMaxPrice] = useState(25000)
+  const [minPrice ,setMinPrice] = useState(0)
   const [productsCount,setProductsCount] = useState(0)
   const [resultPerPage,setResultPerPage] = useState(0)
   const [count,setCount] = useState(0)
@@ -33,6 +34,7 @@ const  Products  =  ({ params }) => {
   const [loading, setLoading] = useState(true); // Loading state
 
   const categories = [
+    "All",
     "Laptop",
     "Footwear",
     "Bottom",
@@ -72,6 +74,10 @@ useEffect(() => {
   fetchData();
 
 }, [name, page , filters]);
+
+const setPriceHandler = () => {
+  setFilters({ ...filters, price: { gte: minPrice, lte: maxPrice } });
+};
 const priceHandler = (event, newPrice) => {
   setPrice(newPrice);
   setFilters({ ...filters, price: { gte: newPrice[0], lte: newPrice[1] } });
@@ -82,8 +88,13 @@ const ratingHandler = ( event,newRating) => {
 };
 
 const handleCategoryClick = (selectedCategory) => {
-  setCategory(selectedCategory);
-  setFilters({ ...filters, category: selectedCategory.toLowerCase() });
+  if (selectedCategory === "All") {
+    const newFilters = { ...filters };
+    delete newFilters.category;
+    setFilters(newFilters);
+  } else {
+    setFilters({ ...filters, category: selectedCategory.toLowerCase() });
+  }
 };
 const  isAuth  = useSelector(
   (state) => state.user.auth
@@ -120,19 +131,35 @@ if(loading1){
                 products.map((product) => (
                   <ProductCard key={product._id} product={product} />
                 ))}
+                 {products.length ===0 && <div className={style.emptyCart}>
+            <RemoveShoppingCartIcon />
+            <h3>No Product Found</h3>
+            
+          </div> }
             </div>
             <div className={style.filterBox}>
-            <div>
-<label htmlFor="price">Price:</label>
-<Slider
-              value={price}
-              onChange={priceHandler}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              min={0}
-              max={25000}
-            />
+            <div className={style.priceFilterContainer}>
+            
+            <label htmlFor="price">Price:</label>
+  <input
+    type="number"
+    value={maxPrice}
+    onChange={(e) => setMaxPrice(Number(e.target.value))}
+    placeholder="Max Price"
+    className={style.priceInput}
+  />
+  <input
+    type="number"
+    value={minPrice}
+    onChange={(e) => setMinPrice(Number(e.target.value))}
+    placeholder="Min Price"
+    className={style.priceInput}
+  />
+  <button onClick={setPriceHandler} className={style.priceButton}>
+    Submit
+  </button>
 </div>
+          
               <p>Categories</p>
               <ul className={style.categoryBox}>
             {categories.map((cat) => (
@@ -176,11 +203,7 @@ if(loading1){
               </div>
             )}
 
-{products.length ===0 && <div className={style.emptyCart}>
-            <RemoveShoppingCartIcon />
-            <h3>No Product Found</h3>
-            
-          </div> }
+
           </>
           
           <Footer/>

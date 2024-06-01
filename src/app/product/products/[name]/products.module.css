@@ -1,6 +1,5 @@
 
 .emptyCart {
-  margin-top: -20vh;
   text-align: center;
   padding-bottom: 10vh;
   display: flex;
@@ -8,7 +7,6 @@
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-
 }
 .emptyCart > svg {
   font-size: 5vmax;
@@ -97,10 +95,12 @@
   }
   
   .filterBox {
+    
     width: 10vmax;
     position: absolute;
-    top: 10vmax;
+    top: 8vmax;
     left: 4vmax;
+   
   }
   
   .categoryBox {
@@ -122,11 +122,68 @@
   .filterBox > fieldset {
     border: 1px solid rgba(0, 0, 0, 0.329);
   }
+  .priceFilterContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vmax;
+    margin: 0.5vmax 0;
+    align-items: flex-start;
+  }
+  
+  .priceInputs {
+    display: flex;
+    gap: 0.5vmax;
+  }
+  
+  .priceInput {
+    padding: 0.5vmax;
+    font-size: 1vmax;
+    border: 1px solid rgba(0, 0, 0, 0.178);
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 150px;
+  }
+  
+  .priceInput:focus {
+    border-color: tomato;
+  }
+  
+  .priceButton {
+    padding: 0.5vmax 1vmax;
+    font-size: 1vmax;
+    background-color: tomato;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-start; /* Align button to the start */
+    width: 150px; /* Increased width */
+  }
+  
+  .priceButton:hover {
+    background-color: rgb(200, 60, 60);
+  }
   
   @media screen and (max-width: 600px) {
- 
+    .priceFilterContainer {
+      align-items: center;
+    }
+  
+    .priceInputs {
+      flex-direction: column;
+      align-items: center;
+      gap: 1vmax;
+    }
+  
+    .priceInput, .priceButton {
+      font-size: 1.5vmax;
+      width: 100%;
+    }
     .productsHeading {
       margin:5vmax auto;
+      margin-top: 7vmax;
       width: 20vw;
       border-bottom: 1px solid rgba(0, 0, 0, 0.171);
       padding: 2vmax;

@@ -33,8 +33,10 @@ const  Products  =  () => {
     const [count,setCount] = useState(0)
     const [filters, setFilters] = useState({});
     const [loading, setLoading] = useState(true); // Loading state
-      
+      const [maxPrice ,setMaxPrice] = useState(25000)
+      const [minPrice ,setMinPrice] = useState(0)
     const categories = [
+      "All",
       "Laptop",
       "Footwear",
       "Bottom",
@@ -61,6 +63,7 @@ const  Products  =  () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        //setLoading(true)   
         const response = await GetAllProduct({ name, page , filters });
         if (response.status === 200) {
           setProducts(response.data.Products);
@@ -73,28 +76,41 @@ const  Products  =  () => {
           setProductsCount(response.data.productsCount)
           setResultPerPage(response.data.resultPerPage)
           setCount(response.data.filteredProductsCount)
+          
         }
       } catch (error) {
+      //  setLoading(true)
         console.log("Internal server error");
         // Handle error here, e.g., set error state
       }
+      //finally{
+        //setLoading(false)
+      //}
     };
 
     fetchData();
 
   }, [name, page , filters]);
-  const priceHandler = (event, newPrice) => {
-    setPrice(newPrice);
-    setFilters({ ...filters, price: { gte: newPrice[0], lte: newPrice[1] } });
+  const setPriceHandler = () => {
+    setFilters({ ...filters, price: { gte: minPrice, lte: maxPrice } });
   };
+ // const priceHandler = (event, newPrice) => {
+  //  setPrice(newPrice);
+  //  setFilters({ ...filters, price: { gte: newPrice[0], lte: newPrice[1] } });
+//  };
   const ratingHandler = ( event,newRating) => {
     setRatings(newRating);
     setFilters({ ...filters, ratings: { gte: newRating} });
   };
 
   const handleCategoryClick = (selectedCategory) => {
-
-    setFilters({ ...filters, category: selectedCategory.toLowerCase() });
+    if (selectedCategory === "All") {
+      const newFilters = { ...filters };
+      delete newFilters.category;
+      setFilters(newFilters);
+    } else {
+      setFilters({ ...filters, category: selectedCategory.toLowerCase() });
+    }
   };
  const  isAuth  = useSelector(
   (state) => state.user.auth
@@ -116,7 +132,7 @@ useEffect(() => {
 
     return (
       <>
-       {loading1 || productsLoading === 0 ? <Loader/> : <>
+       {loading1 || loading ||  productsLoading === 0 ? <Loader/> : <>
        <Protected isAuth={isAuth}>
           <Navbar/>
             <>
@@ -127,17 +143,34 @@ useEffect(() => {
                   products.map((product) => (
                     <ProductCard key={product._id} product={product} />
                   ))}
+                  {products.length ===0 && <div className={style.emptyCart}>
+            <RemoveShoppingCartIcon />
+            <h3>No Product Found</h3>
+            
+          </div> }
               </div>
               <div className={style.filterBox}>
-              <div>
-              <Slider
-              value={price}
-              onChange={priceHandler}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              min={0}
-              max={25000}
-            />
+              <div className={style.priceFilterContainer}>
+              
+              <label htmlFor="price">Price:</label>
+           
+  <input
+    type="number"
+    value={maxPrice}
+    onChange={(e) => setMaxPrice(Number(e.target.value))}
+    placeholder="Max Price"
+    className={style.priceInput}
+  />
+  <input
+    type="number"
+    value={minPrice}
+    onChange={(e) => setMinPrice(Number(e.target.value))}
+    placeholder="Min Price"
+    className={style.priceInput}
+  />
+  <button onClick={setPriceHandler} className={style.priceButton}>
+    Submit
+  </button>
 </div>
                 <p>Categories</p>
                 <ul className={style.categoryBox}>
@@ -184,11 +217,7 @@ useEffect(() => {
                 </div>
               )}
 
-              {products.length ===0 && <div className={style.emptyCart}>
-            <RemoveShoppingCartIcon />
-            <h3>No Product Found</h3>
-            
-          </div> }
+             
             </>
             <Footer/>
               </Protected>
