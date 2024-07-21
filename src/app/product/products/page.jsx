@@ -46,16 +46,29 @@ const  Products  =  () => {
       "SmartPhones",
     ];
     const { name } = params;
+   // const categoryUrlLink = searchParams.get('category');
+
+
+    
+  
     //const category1 = searchParams.get('category')
 //setCategory(category1)
 
     /* 
   // Use useParams to get the keyword parameter from the URL
  
- 
+ useEffect(() => {
+    const category = searchParams.get("category");
+    if (category) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        category: category.toLowerCase(),
+      }));
+    }
+  }, []);
  
  */
- 
+  
 
   const setCurrentPageNo = (e) => {
     setPage(e);
@@ -132,7 +145,7 @@ useEffect(() => {
 
     return (
       <>
-       {loading1 || loading ||  productsLoading === 0 ? <Loader/> : <>
+       {loading1 || loading ||  productsLoading.length === 0 ? <Loader/> : <>
        <Protected isAuth={isAuth}>
           <Navbar/>
             <>

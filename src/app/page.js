@@ -10,6 +10,7 @@ import { GetAllProduct } from "../ApiRequest/internalapi";
 import { useEffect, useState } from "react";
 import FloatFooter from "../components/footer/footer";
 import Footer from "../components/footer/footer";
+import CategorySection from "../components/catogoriesCard/CategorySection";
 export default function Home() {
   const loading = useAutoLogin();
   const [pages, setPage] = useState(1);
@@ -40,6 +41,7 @@ export default function Home() {
           <ParticlesBackground></ParticlesBackground>
         </div>
       </main>
+      
       <h2 className={styles.homeHeading}>Featured Products</h2>
       <div className={styles.container} id="container">
         {products &&
